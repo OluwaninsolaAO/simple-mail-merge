@@ -6,11 +6,12 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from os import getenv
 from dotenv import load_dotenv
+from models.smtp_config import SMTPConfig
 
 load_dotenv()
 
 # grouping of models' classes
-classes = [User]
+classes = [User, SMTPConfig]
 DB_USER = getenv('DB_USER')
 DB_PWD = getenv('DB_PWD')
 DB_HOST = getenv('DB_HOST')
