@@ -12,7 +12,7 @@ class UserAuth:
     _password = Column(String(255), nullable=True)
 
     @property
-    def password(self):
+    def password(self) -> str:
         """User password getter"""
         return self._password
 

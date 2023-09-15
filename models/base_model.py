@@ -7,6 +7,7 @@ from sqlalchemy import (
 )
 from datetime import datetime
 from uuid import uuid4
+from typing import Dict
 
 import models
 
@@ -32,7 +33,7 @@ class BaseModel:
         models.storage.delete(self)
         models.storage.save()
 
-    def to_dict(self):
+    def to_dict(self) -> Dict[str, str]:
         """Returns a dictionary representation of an obj"""
         obj = {}
         obj.update(self.__dict__)
