@@ -1,0 +1,15 @@
+mysql> desc smtp_configs;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| alias      | varchar(255) | YES  |     | NULL    |       |
+| username   | varchar(255) | NO   |     | NULL    |       |
+| _password  | varchar(255) | NO   |     | NULL    |       |
+| server     | varchar(255) | NO   |     | NULL    |       |
+| port       | int          | NO   |     | NULL    |       |
+| rate       | int          | YES  |     | NULL    |       |
+| user_id    | varchar(60)  | NO   | MUL | NULL    |       |
+| id         | varchar(60)  | NO   | PRI | NULL    |       |
+| created_at | datetime     | NO   |     | NULL    |       |
+| updated_at | datetime     | NO   |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
