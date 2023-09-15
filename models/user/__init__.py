@@ -31,7 +31,7 @@ class User(BaseModel, Base, UserAuth):
         # level - 1 heldback attributes
         attrs = ['_password', 'reset_token']
         for attr in attrs:
-            if obj.get(attr, None):
+            if attr in obj:
                 obj.pop(attr)
 
         if detailed is True:
@@ -40,7 +40,7 @@ class User(BaseModel, Base, UserAuth):
         # level - 3 heldback attributes
         attrs = ['created_at', 'updated_at', 'email', 'phone', 'address']
         for attr in attrs:
-            if obj.get(attr, None):
+            if attr in obj:
                 obj.pop(attr)
 
         return obj
