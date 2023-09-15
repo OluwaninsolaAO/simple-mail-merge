@@ -50,7 +50,7 @@ class SMTPConfig(BaseModel, Base):
             return obj
 
         # level - 2 heldback attributes
-        attrs = ['user_id']
+        attrs = ['user_id', 'created_at', 'updated_at']
         for attr in attrs:
             if obj.get(attr, None):
                 obj.pop(attr)
