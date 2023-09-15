@@ -1,0 +1,15 @@
+mysql> desc users;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| firstname   | varchar(255) | NO   |     | NULL    |       |
+| lastname    | varchar(255) | NO   |     | NULL    |       |
+| email       | varchar(255) | NO   | UNI | NULL    |       |
+| phone       | varchar(15)  | NO   | UNI | NULL    |       |
+| address     | varchar(255) | YES  |     | NULL    |       |
+| reset_token | varchar(255) | YES  |     | NULL    |       |
+| _password   | varchar(255) | YES  |     | NULL    |       |
+| id          | varchar(60)  | NO   | PRI | NULL    |       |
+| created_at  | datetime     | NO   |     | NULL    |       |
+| updated_at  | datetime     | NO   |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
