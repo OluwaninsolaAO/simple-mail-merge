@@ -29,7 +29,7 @@ class User(BaseModel, Base, UserAuth):
         obj = super().to_dict()
 
         # level - 1 heldback attributes
-        attrs = ['_password', 'reset_token']
+        attrs = ['_password', 'reset_token', 'smtp_configs']
         for attr in attrs:
             if attr in obj:
                 obj.pop(attr)
