@@ -39,6 +39,12 @@ def create_users():
     for attr in attrs:
         if attr in data:
             user_data.update({attr: data.pop(attr)})
+        else:
+            return jsonify({
+                "status": "error",
+                "message": "Missing required data: " + attr,
+                "data": None
+            }), 400
     try:
         user = User(**user_data)
         user.save()
