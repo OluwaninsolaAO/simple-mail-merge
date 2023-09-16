@@ -55,12 +55,12 @@ def reset_user_password():
     user: User = storage.match(User, email=data.get('email'))
     if user is None:
         abort(404)
-    encoded_token = user.generate_reset_token()
-    mail.send_mail(user=user, Subject='Password Reset',
-                   body=render_template('reset_user_password.html',
-                                        user=user,
-                                        encoded_token=encoded_token),
-                   content_type='html')
+    # encoded_token = user.generate_reset_token()
+    # mail.send_mail(user=user, Subject='Password Reset',
+    #                body=render_template('reset_user_password.html',
+    #                                     user=user,
+    #                                     encoded_token=encoded_token),
+    #                content_type='html')
     return jsonify({
         "status": "success",
         "message": "Request is being processed",
