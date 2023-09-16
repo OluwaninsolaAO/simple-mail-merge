@@ -55,7 +55,8 @@ def reset_user_password():
     user: User = storage.match(User, email=data.get('email'))
     if user is None:
         abort(404)
-    # encoded_token = user.generate_reset_token()
+    encoded_token = user.generate_reset_token()  # move this to redis
+    user.save()
     # mail.send_mail(user=user, Subject='Password Reset',
     #                body=render_template('reset_user_password.html',
     #                                     user=user,
