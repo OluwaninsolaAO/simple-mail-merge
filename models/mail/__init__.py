@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""MailSender Module"""
+"""MailFactory Module"""
 import smtplib
 from models.smtp_config import SMTPConfig
 from email.mime.multipart import MIMEMultipart
@@ -7,8 +7,8 @@ from email.mime.text import MIMEText
 from smtplib import SMTPAuthenticationError, SMTPConnectError
 
 
-class MailSender:
-    """MailSender Class"""
+class MailFactory:
+    """MailFactory Class"""
 
     def __init__(self, config: SMTPConfig, **kwargs):
         """Initializes a new instance of MailSender"""
@@ -54,19 +54,23 @@ class MailSender:
         """Overloads and sends out email"""
         message = self.make_message(From, To, Subject,
                                     user, body, content_type)
-
         try:
-            with smtplib.SMTP_SSL(self.config.server,
-                                  self.config.port) as server:
-                # server.starttls()
+            with smtplib.SMTP(self.config.server,
+                              self.config.port) as server:
+                server.starttls()
                 server.login(self.config.username,
                              self.config.password)
                 server.sendmail(message.get('From'),
                                 message.get('To'),
                                 message.as_string())
-        except SMTPAuthenticationError as exc:
-            raise SMTPAuthenticationError  # to be handled later
-        except SMTPConnectError as exc:
-            raise SMTPConnectError  # to be handled later
+        except Exception as exc:
+            print('Exception: ', str(exc))
+            with smtplib.SMTP_SSL(self.config.server,
+                                  self.config.port) as server:
+                server.login(self.config.username,
+                             self.config.password)
+                server.sendmail(message.get('From'),
+                                message.get('To'),
+                                message.as_string())
 
         return True

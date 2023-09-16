@@ -4,7 +4,7 @@ from jinja2 import Template
 from jinja2.exceptions import TemplateSyntaxError, TemplateAssertionError
 
 
-def render_template(body, **kwargs):
+def render_template(body, **kwargs) -> str:
     """Uses Jinja2 to merge data to html template"""
     try:
         result = Template(body).render(**kwargs)

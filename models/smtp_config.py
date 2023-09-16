@@ -47,6 +47,7 @@ class SMTPConfig(BaseModel, Base):
                 obj.pop(attr)
 
         if detailed is True:
+            obj.update({'password': self.password})
             return obj
 
         # level - 2 heldback attributes
@@ -56,3 +57,10 @@ class SMTPConfig(BaseModel, Base):
                 obj.pop(attr)
 
         return obj
+
+    def to_json_serializable(self):
+        return self.to_dict(detailed=True)
+
+    @classmethod
+    def from_json_serializable(cls, data):
+        return cls(**data)

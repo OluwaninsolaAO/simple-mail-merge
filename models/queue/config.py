@@ -7,7 +7,7 @@
 # ensure that redis is up and running on your machine.
 #
 # Start Queue Service using:
-# $ celery -A queue_service worker --loglevel=info
+# $ celery -A <path-to-queue> worker --loglevel=info
 # ----------------------------------------------------------------
 
 broker_url = 'redis://localhost:6379/0'
