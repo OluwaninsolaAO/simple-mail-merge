@@ -17,3 +17,4 @@ parameterized
 httplib2
 celery
 redis
+jinja2

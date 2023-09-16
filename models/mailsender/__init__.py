@@ -58,7 +58,7 @@ class MailSender:
         try:
             with smtplib.SMTP_SSL(self.config.server,
                                   self.config.port) as server:
-                server.starttls()
+                # server.starttls()
                 server.login(self.config.username,
                              self.config.password)
                 server.sendmail(message.get('From'),
