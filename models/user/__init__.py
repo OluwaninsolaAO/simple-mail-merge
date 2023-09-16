@@ -4,9 +4,10 @@
 from typing import Dict
 from models.base_model import Base, BaseModel
 from sqlalchemy import (
-    Column, String
+    Column, String, Enum
 )
 from models.user.auth import UserAuth
+from models.enums import UserRole
 
 
 class User(BaseModel, Base, UserAuth):
@@ -18,6 +19,8 @@ class User(BaseModel, Base, UserAuth):
     email = Column(String(255), nullable=False, unique=True)
     phone = Column(String(15), nullable=False, unique=True)
     address = Column(String(255), nullable=True)
+    role = Column(Enum(UserRole), default=UserRole.user,
+                  nullable=False)
 
     @property
     def name(self) -> str:
@@ -29,7 +32,7 @@ class User(BaseModel, Base, UserAuth):
         obj = super().to_dict()
 
         # level - 1 heldback attributes
-        attrs = ['_password', 'reset_token', 'smtp_configs']
+        attrs = ['_password', 'reset_token', 'smtp_configs', 'role']
         for attr in attrs:
             if attr in obj:
                 obj.pop(attr)
