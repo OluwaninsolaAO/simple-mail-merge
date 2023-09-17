@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """MailFactory Module"""
 import smtplib
-from models.smtp_config import SMTPConfig
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from smtplib import SMTPAuthenticationError, SMTPConnectError
@@ -10,7 +9,7 @@ from smtplib import SMTPAuthenticationError, SMTPConnectError
 class MailFactory:
     """MailFactory Class"""
 
-    def __init__(self, config: SMTPConfig, **kwargs):
+    def __init__(self, config: dict, **kwargs):
         """Initializes a new instance of MailSender"""
         self.config = config
 
@@ -27,7 +26,7 @@ class MailFactory:
 
         # validate From
         if From is None:
-            message['From'] = self.config.username
+            message['From'] = self.config.get('username')
         else:
             message['From'] = From
 
@@ -54,21 +53,31 @@ class MailFactory:
         """Overloads and sends out email"""
         message = self.make_message(From, To, Subject,
                                     user, body, content_type)
+
+        # --------------------------------------------------------
+        # Mock Mail Send: To be removed
+        # --------------------------------------------------------
+        from os import getenv
+        if getenv('TEST', False):
+            print(">>> Send: To: {} From: {}".format(
+                message.get('To'), message.get('From')))
+            return True
+        # --------------------------------------------------------
         try:
-            with smtplib.SMTP(self.config.server,
-                              self.config.port) as server:
+            with smtplib.SMTP(self.config.get('server'),
+                              self.config.get('port')) as server:
                 server.starttls()
-                server.login(self.config.username,
-                             self.config.password)
+                server.login(self.config.get('username'),
+                             self.config.get('password'))
                 server.sendmail(message.get('From'),
                                 message.get('To'),
                                 message.as_string())
         except Exception as exc:
             print('Exception: ', str(exc))
-            with smtplib.SMTP_SSL(self.config.server,
-                                  self.config.port) as server:
-                server.login(self.config.username,
-                             self.config.password)
+            with smtplib.SMTP_SSL(self.config.get('server'),
+                                  self.config.get('port')) as server:
+                server.login(self.config.get('username'),
+                             self.config.get('password'))
                 server.sendmail(message.get('From'),
                                 message.get('To'),
                                 message.as_string())

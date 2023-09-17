@@ -3,21 +3,79 @@
 from models.queue import app
 from models.mail import MailFactory
 from models.mail.utils import render_template
-from models import storage
-from models.smtp_config import SMTPConfig
+from typing import List
+from dotenv import load_dotenv
+from os import getenv
+import redis
+from datetime import datetime, timedelta
+
+load_dotenv()
+PSN = getenv('PROJECT_SHORT_NAME', 'test_queue')
+r = redis.from_url(app.connection().as_uri())
 
 
 @app.task
 def task_send_mail(
-    config_id, Subject: str, body: str,
-    receipient: dict, **kwargs
+    config: dict, Subject: str, body: str,
+    recipient: dict, **kwargs
 ):
-    """Creates Factory an SMTP connection and send mail"""
-    config = storage.get(SMTPConfig, config_id)
+    """Sends email to a single reciepient"""
+
+    # --------------------------------------------
+    # CONFIGS RATE LIMITING IMPLEMENTATION WITH REDIS
+    # --------------------------------------------
+    key = '{}_configs:{}'.format(PSN, config.get('id'))
+    # ttl = timedelta(hours=1)
+    ttl = timedelta(seconds=15)
+
+    mailcount = r.hget(key, 'mailcount')
+    timestamp = r.hget(key, 'timestamp')
+
+    if not all([mailcount, timestamp]):  # not being tracked
+        r.hset(key, 'mailcount', 1)
+        r.hset(key, 'timestamp', datetime.now().isoformat())
+        r.expire(key, ttl.seconds - 5)  # 5 seconds shorter
+    else:
+        mailcount = int(mailcount)
+        timestamp = datetime.fromisoformat(timestamp.decode('utf-8'))
+
+        if mailcount >= 3:  # config.get('rate'):  # rate limit exceeded
+            timestamp = (timestamp + ttl) - datetime.now()
+            # reschedule task for later
+            print('>>> scheduled for: {}'.format(timestamp))
+            task_send_mail.apply_async(
+                args=(
+                    config, Subject, body, recipient
+                ),
+                kwargs=kwargs,
+                countdown=timestamp.seconds
+            )
+            return
+        else:  # rate not exceeded; OK increase  mailcount
+            r.hset(key, 'mailcount', mailcount + 1)
+    # --------------------------------------------
+
     mail = MailFactory(config=config)
     mail.send_mail(
-        Subject=render_template(body=Subject, **receipient),
-        body=render_template(body=body, **receipient),
-        user=receipient,
+        Subject=render_template(body=Subject, **recipient),
+        body=render_template(body=body, **recipient),
+        user=recipient,
         ** kwargs
     )
+
+
+@app.task
+def task_bulk_send(
+    config: dict, Subject: str, body: str,
+    recipients: List[dict], **kwargs
+):
+    """Factory an SMTP connection and send bulk email"""
+    for reciepient in recipients:
+        fields = {
+            'config': config,
+            'Subject': Subject,
+            'body': body,
+            'recipient': reciepient
+        }
+        fields.update(kwargs)
+        task_send_mail.apply_async(kwargs=fields)
