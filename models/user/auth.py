@@ -69,3 +69,4 @@ class UserAuth:
             raise ValueError('Invalid or expired token')
         setattr(user, 'password', new_password)
         setattr(user, 'reset_token', None)
+        return user
