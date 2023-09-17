@@ -2,15 +2,15 @@ import Link from "next/link";
 
 function Navbar() {
   return (
-    <nav className="flex justify-between mx-12 my-5">
+    <nav className="flex justify-between mx-12 my-5 items-center">
       <div>
-        <Link href="/" className="text-xl">
+        <Link href="/" className="text-2xl font-semibold text-amber-600 hover:text-amber-500">
           Mail Merge
         </Link>
       </div>
-      <div>
-        <Link href="/sign-up">Sign Up</Link> |
-        <Link href="/sign-in"> Sign In</Link>
+      <div className="text-amber-500">
+        <Link href="/signup" className="btn">Sign Up</Link>
+        <Link href="/signin" className="btn ml-2">Sign In</Link>
       </div>
     </nav>
   );

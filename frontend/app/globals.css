@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+.btn {
+  @apply border-2 p-2 py-1 font-semibold  border-amber-600 rounded-full hover:bg-amber-500 hover:text-white transition ease-out duration-300;
+}
