@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function SignUpForm() {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [password2, setPassword2] = useState('');
+  const [password2, setPassword2] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -17,15 +18,22 @@ export default function SignUpForm() {
 
   return (
     <div className="lg:grid grid-cols-2 text-center h-screen items-center">
-      <div className="mb-10 lg:mb-0 lg:my-0">
+      <div className="mb-8 lg:mb-0 lg:my-0 mx-auto">
+        <Image
+          src="/LockUps/IconMark.png"
+          alt="Mail Merge Icon"
+          width={100}
+          height={100}
+          className="text-center mx-auto"
+        />
         <h1 className="text-2xl md:text-4xl text-content font-semibold text-amber-600">
-          Simple Mail Merge
+          Mail Merge
         </h1>
       </div>
       <div className="">
         <form onSubmit={handleSubmit} className="text-center">
-        <div className="mb-2">
-            <label>Firstname</label>
+          <div className="mb-2">
+            <label>First Name</label>
             <input
               className="focus:outline-none focus:shadow-outline"
               id="firstName"
@@ -36,7 +44,7 @@ export default function SignUpForm() {
             />
           </div>
           <div className="mb-2">
-            <label>Lastname</label>
+            <label>Last Name</label>
             <input
               className="focus:outline-none focus:shadow-outline"
               id="lastName"
@@ -82,7 +90,10 @@ export default function SignUpForm() {
           </button>
         </form>
         <p className="mt-3">
-          Already have an account? <Link className="text-amber-600" href="/signin">Sign In here</Link>
+          Already have an account?{" "}
+          <Link className="text-amber-600" href="/signin">
+            Sign In here
+          </Link>
         </p>
       </div>
     </div>

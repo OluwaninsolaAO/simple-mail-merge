@@ -17,7 +17,7 @@ export default function SmtpForm() {
 
   return (
     <div className="lg:grid grid-cols-2 text-center h-screen items-center">
-      <div className="mb-10 lg:mb-0 lg:my-0">
+      <div className="mb-8 lg:mb-0 lg:my-0">
         <h1 className="text-2xl md:text-4xl text-content font-semibold text-amber-600">
           SMTP Configuration
         </h1>
