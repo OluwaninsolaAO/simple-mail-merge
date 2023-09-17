@@ -14,7 +14,7 @@ export default function SignInForm() {
 
   return (
     <div className="lg:grid grid-cols-2 text-center h-screen items-center">
-      <div className="mb-10 lg:mb-0 lg:my-0">
+      <div className="mb-10 lg:mb-0 lg:my-0 mt-6">
         <h1 className="text-2xl md:text-4xl text-content font-semibold text-amber-600">
           Simple Mail Merge
         </h1>
@@ -47,7 +47,7 @@ export default function SignInForm() {
           </button>
         </form>
         <p className="mt-3">
-          Do not have an account? <Link className="text-blue-800" href="/signup">Sign Up here</Link>
+          Do not have an account? <Link className="text-amber-600" href="/signup">Sign Up here</Link>
         </p>
       </div>
     </div>

@@ -82,7 +82,7 @@ export default function SignUpForm() {
           </button>
         </form>
         <p className="mt-3">
-          Already have an account? <Link className="text-blue-800" href="/signin">Sign In here</Link>
+          Already have an account? <Link className="text-amber-600" href="/signin">Sign In here</Link>
         </p>
       </div>
     </div>

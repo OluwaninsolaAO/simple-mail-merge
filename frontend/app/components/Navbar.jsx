@@ -4,7 +4,7 @@ function Navbar() {
   return (
     <nav className="flex justify-between mx-5 md:mx-12 my-5 items-center">
       <div>
-        <Link href="/" className="text-xl md:text-2xl font-semibold text-amber-600 hover:text-amber-500">
+        <Link href="/" className="text-xl md:text-2xl font-semibold text-content text-amber-600 hover:text-amber-500">
           Mail Merge
         </Link>
       </div>
