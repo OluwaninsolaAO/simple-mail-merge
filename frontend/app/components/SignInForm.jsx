@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 export default function SignInForm() {
   const [email, setEmail] = useState("");
@@ -12,9 +13,11 @@ export default function SignInForm() {
   }
 
   return (
-    <div className="md:grid grid-cols-2 text-center h-screen items-center">
-      <div className="">
-        <h1 className="text-3xl">Simple Mail Merge</h1>
+    <div className="lg:grid grid-cols-2 text-center h-screen items-center">
+      <div className="mb-10 lg:mb-0 lg:my-0">
+        <h1 className="text-2xl md:text-4xl text-content font-semibold">
+          Simple Mail Merge
+        </h1>
       </div>
       <div className="">
         <form onSubmit={handleSubmit} className="text-center">
@@ -43,6 +46,9 @@ export default function SignInForm() {
             Log In
           </button>
         </form>
+        <p className="mt-3">
+          Do not have an account? <Link className="text-blue-800" href="/signup">Sign Up here</Link>
+        </p>
       </div>
     </div>
   );
