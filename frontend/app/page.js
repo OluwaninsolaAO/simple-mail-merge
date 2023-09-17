@@ -3,22 +3,31 @@ import Image from "next/image";
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col justify-between p-24">
-      <div className="grid grid-cols-2 items-center">
+      <div className="md:grid grid-cols-2 items-center">
         <div className="">
-          <h4 className="font-bold text-2xl mb-3 text-amber-500">
+          <h4 className="font-bold text-2xl mb-3 text-amber-500 text-justify">
             Simplify your Email Campaign with Mail Merge
           </h4>
-          <p className="text-lg text-gray-800">
-            A simple mail merge application is a tool that enables users to send
-            multiple personalized emails efficiently. Users can input a list of
-            recipients and customize the content and greetings for each email.
-            The application then automatically generates and sends these emails
-            to the specified recipients, saving time and effort compared to
-            sending individual emails manually. It's a handy solution for tasks
-            like sending out newsletters, invitations, or announcements to a
-            large number of people while ensuring a personal touch in each
-            message.
-          </p>
+          <ul className="text-lg text-gray-800 text-content">
+            <li>
+              A simple mail merge application is a tool that enables users to
+              send multiple personalized emails efficiently.
+            </li>
+            <li>
+              Users can input a list of recipients and customize the content and
+              greetings for each email.
+            </li>
+            <li>
+              The application then automatically generates and sends these
+              emails to the specified recipients, saving time and effort
+              compared to sending individual emails manually.
+            </li>
+            <li>
+              It is a handy solution for tasks like sending out newsletters,
+              invitations, or announcements to a large number of people while
+              ensuring a personal touch in each message.
+            </li>
+          </ul>
         </div>
         <div className="mx-auto">
           <svg
