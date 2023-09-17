@@ -1,7 +1,9 @@
-function SignUp() {
-    return <div className="grid grid-cols-2">
+import SignUpForm from "../components/SignUpForm";
 
-    </div>
+function SignUp() {
+    return (
+        <div>Hehehehe</div>
+    )
 }
 
 export default SignUp;
