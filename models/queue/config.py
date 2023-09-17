@@ -11,7 +11,8 @@
 # ----------------------------------------------------------------
 
 broker_url = 'redis://localhost:6379/0'
-result_backend = 'db+sqlite:///queue.sqlite'
+result_backend = 'redis://localhost:6379/0'
+# result_backend = 'db+sqlite:///queue.sqlite'
 broker_connection_retry_on_startup = True
-worker_concurrency = 10
+worker_concurrency = 1
 task_publish_retry = True

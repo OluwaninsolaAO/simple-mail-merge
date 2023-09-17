@@ -1,9 +1,10 @@
 from models.user import User
 from models import storage
 from models.queue.tasks import task_send_mail
+from models.smtp_config import SMTPConfig
 
 user: User = storage.match(User, firstname='Abraham')
-config = user.smtp_configs[0]
+config: SMTPConfig = user.smtp_configs[0]
 print(config.alias)
 
 
@@ -21,7 +22,7 @@ fields: dict = {
     'body': template_email,
     'receipient': {'firstname': 'Abraham', 'lastname': 'Olagunju', 'email': 'olagunjusola070@gmail.com'},
     'content_type': 'html',
-    'config_id': config.id
+    'config': config.to_dict(detailed=True)
 }
 
 task_send_mail.apply_async(kwargs=fields)
