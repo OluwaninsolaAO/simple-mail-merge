@@ -8,6 +8,7 @@ from sqlalchemy import (
 )
 from models.user.auth import UserAuth
 from models.enums import UserRole
+from sqlalchemy.orm import relationship
 
 
 class User(BaseModel, Base, UserAuth):
@@ -21,6 +22,9 @@ class User(BaseModel, Base, UserAuth):
     address = Column(String(255), nullable=True)
     role = Column(Enum(UserRole), default=UserRole.user,
                   nullable=False)
+
+    smtp_configs = relationship('SMTPConfig', backref='user',
+                                cascade='all, delete')
 
     @property
     def name(self) -> str:

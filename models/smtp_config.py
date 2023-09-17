@@ -5,7 +5,6 @@ from models.base_model import Base, BaseModel
 from sqlalchemy import (
     Column, String, Integer, ForeignKey
 )
-from sqlalchemy.orm import relationship
 from base64 import b64encode, b64decode
 from typing import Dict
 
@@ -23,8 +22,6 @@ class SMTPConfig(BaseModel, Base):
     rate = Column(Integer, default=50)  # mails/hour
 
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
-    user = relationship('User', backref='smtp_configs',
-                        cascade='all, delete')
 
     @property
     def password(self) -> str:

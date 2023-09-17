@@ -111,3 +111,21 @@ def update_user(user_id):
         "message": "User data updated successfully",
         "data": user.to_dict(detailed=True)
     })
+
+
+@app_views.route('/users/<user_id>', methods=['DELETE'])
+@login_required([UserRole.admin])
+def delete_user(user_id):
+    """Delete from storage user with a matching user_id"""
+    user: User = storage.get(User, user_id)
+    if user is None:
+        abort(404)
+
+    storage.delete(user)
+    storage.save()
+
+    return jsonify({
+        "status": "success",
+        "message": "User deleted successfully",
+        "data": None
+    }), 200
