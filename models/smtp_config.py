@@ -38,7 +38,7 @@ class SMTPConfig(BaseModel, Base):
         obj = super().to_dict()
 
         # level - 1 heldback attributes
-        attrs = ['_password']
+        attrs = ['_password', 'user']
         for attr in attrs:
             if attr in obj:
                 obj.pop(attr)

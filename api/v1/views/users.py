@@ -83,10 +83,8 @@ def update_user(user_id):
     if user is None:
         abort(404)
 
-    # Validates g.user access to update user data
-    current_user: User = g.user
-    if not any([current_user is user,
-                current_user.role is UserRole.admin]):
+    # validates g.user's access to update user data
+    if g.user is not user:
         abort(401)
 
     # list of user attribues allowed to be updated
