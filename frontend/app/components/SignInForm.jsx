@@ -15,7 +15,7 @@ export default function SignInForm() {
   return (
     <div className="lg:grid grid-cols-2 text-center h-screen items-center">
       <div className="mb-10 lg:mb-0 lg:my-0">
-        <h1 className="text-2xl md:text-4xl text-content font-semibold">
+        <h1 className="text-2xl md:text-4xl text-content font-semibold text-amber-600">
           Simple Mail Merge
         </h1>
       </div>
