@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function SmtpForm() {
   const [firstName, setFirstName] = useState('');
@@ -17,7 +18,14 @@ export default function SmtpForm() {
 
   return (
     <div className="lg:grid grid-cols-2 text-center h-screen items-center">
-      <div className="mb-8 lg:mb-0 lg:my-0">
+      <div className="mb-8 lg:mb-0 lg:my-0 mx-auto">
+        <Image
+          src="/LockUps/IconMark.png"
+          alt="Mail Merge Icon"
+          width={100}
+          height={100}
+          className="text-center mx-auto"
+        />
         <h1 className="text-2xl md:text-4xl text-content font-semibold text-amber-600">
           SMTP Configuration
         </h1>

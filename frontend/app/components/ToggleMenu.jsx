@@ -3,14 +3,16 @@
 import React from "react";
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function ToggleMenu() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
-    <div className="text-amber-500 md:flex text-center fixed ml-auto mr-8 mt-5 top-0 right-0">
+    <div className="text-amber-500 md:flex text-center mr-12 h-20">
       <button
-        className="sm:hidden btn"
+        className="sm:hidden btn mt-4"
         onClick={() => {
           setMenuOpen(!menuOpen);
         }}
@@ -31,11 +33,21 @@ export default function ToggleMenu() {
         </svg>
       </button>
       {menuOpen ? (
-        <div className="sm:hidden flex flex-col font-semibold">
-          <Link href="/signup" className="my-2">
+        <div className="sm:hidden flex flex-col">
+          <Link
+            href="/signup"
+            className={`my-2 text-sm font-semibold ${
+              pathname == "/signup" ? "border-b-2 border-amber-600 pb-1" : ""
+            }`}
+          >
             Sign Up
           </Link>
-          <Link href="/signin" className="mb-4">
+          <Link
+            href="/signin"
+            className={`my-2 text-sm font-semibold ${
+              pathname == "/signin" ? "border-b-2 border-amber-600 pb-1" : ""
+            }`}
+          >
             Sign In
           </Link>
         </div>
