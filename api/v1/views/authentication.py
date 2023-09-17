@@ -75,22 +75,24 @@ def change_user_password(encoded_token):
     """Changes User Password"""
     data = postdata()
     if data is None:
-        abort(401)
-    try:
-        user: User = storage.match(
-            User, reset_token=User.decode_reset_token(encoded_token)
-        )
-    except:
-        abort(401)
+        abort(400)
 
-    if user is None:
-        abort(404)
     password = data.get('password')
     if password is None:
-        abort(401)
-    setattr(user, 'password', password)
-    setattr(user, 'reset_token', None)
-    user.save()
+        abort(400)
+    try:
+        user: User = User.update_user_password(
+            encoded_token=encoded_token,
+            new_password=password
+        )
+        user.save()
+    except ValueError as exc:
+        return jsonify({
+            "status": "error",
+            "message": str(exc),
+            "data": None
+        }), 401
+
     return jsonify({
         "status": "success",
         "message": "Password change success",

@@ -45,6 +45,28 @@ class UserAuth:
         return b64encode(token.encode('utf-8')).decode('utf-8')
 
     @staticmethod
-    def decode_reset_token(encoded_token: str):
+    def decode_reset_token(encoded_token: str) -> str:
         """A static method for decoding base64 encoded token"""
-        return b64decode(encoded_token.encode('utf-8')).decode('utf-8')
+        import binascii
+        try:
+            result = b64decode(
+                encoded_token.encode('utf-8')
+            ).decode('utf-8')
+        except binascii.Error as exc:
+            raise ValueError(str(exc))
+        return result
+
+    @staticmethod
+    def update_user_password(encoded_token, new_password):
+        """Update password for User with a matching token"""
+        from models import storage
+        from models.user import User
+
+        user: User = storage.match(
+            User, reset_token=User.decode_reset_token(encoded_token)
+        )
+        if user is None:
+            raise ValueError('Invalid or expired token')
+        setattr(user, 'password', new_password)
+        setattr(user, 'reset_token', None)
+        return user
