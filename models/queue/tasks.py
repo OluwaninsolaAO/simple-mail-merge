@@ -25,8 +25,14 @@ def task_send_mail(
     # CONFIGS RATE LIMITING IMPLEMENTATION WITH REDIS
     # --------------------------------------------
     key = '{}_configs:{}'.format(PSN, config.get('id'))
-    # ttl = timedelta(hours=1)
-    ttl = timedelta(seconds=15)
+    ttl = timedelta(hours=1)
+
+    # --------------------------------------------------------
+    # ttl shorter in TEST Mode To be removed
+    # --------------------------------------------------------
+    if getenv('TEST', False):
+        ttl = timedelta(seconds=15)  # test environ
+    # --------------------------------------------------------
 
     mailcount = r.hget(key, 'mailcount')
     timestamp = r.hget(key, 'timestamp')
@@ -42,7 +48,6 @@ def task_send_mail(
         if mailcount >= 3:  # config.get('rate'):  # rate limit exceeded
             timestamp = (timestamp + ttl) - datetime.now()
             # reschedule task for later
-            print('>>> scheduled for: {}'.format(timestamp))
             task_send_mail.apply_async(
                 args=(
                     config, Subject, body, recipient
