@@ -1,5 +1,7 @@
 function SignUp() {
-    return <div>Sign Up page</div>
+    return <div className="grid grid-cols-2">
+
+    </div>
 }
 
 export default SignUp;

@@ -8,6 +8,15 @@
   @apply border-2 p-2 py-1 font-semibold  border-amber-600 rounded-full hover:bg-amber-500 hover:text-white transition ease-out duration-300;
 }
 
+label {
+  @apply block
+}
+
+
+/* .input {
+  @apply border-2 border-black h-8 w-full sm:w-60 block pl-1
+} */
+
 .text-content {
   font-family: "Josefin Sans", sans-serif;
 }

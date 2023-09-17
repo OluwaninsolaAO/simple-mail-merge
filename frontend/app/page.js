@@ -5,7 +5,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col justify-between p-24">
       <div className="md:grid grid-cols-2 items-center">
         <div className="">
-          <h4 className="font-bold text-2xl mb-3 text-amber-500 text-justify">
+          <h4 className="font-bold text-2xl mb-3 text-amber-500">
             Simplify your Email Campaign with Mail Merge
           </h4>
           <ul className="text-lg text-gray-800 text-content">
