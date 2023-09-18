@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 
 load_dotenv()
 PSN = getenv('PROJECT_SHORT_NAME', 'test_queue')
-r = redis.from_url(app.connection().as_uri())
+redis = redis.from_url(app.connection().as_uri())
 
 
 @app.task
@@ -34,13 +34,13 @@ def task_send_mail(
         ttl = timedelta(seconds=15)  # test environ
     # --------------------------------------------------------
 
-    mailcount = r.hget(key, 'mailcount')
-    timestamp = r.hget(key, 'timestamp')
+    mailcount = redis.hget(key, 'mailcount')
+    timestamp = redis.hget(key, 'timestamp')
 
     if not all([mailcount, timestamp]):  # not being tracked
-        r.hset(key, 'mailcount', 1)
-        r.hset(key, 'timestamp', datetime.now().isoformat())
-        r.expire(key, ttl.seconds - 5)  # 5 seconds shorter
+        redis.hset(key, 'mailcount', 1)
+        redis.hset(key, 'timestamp', datetime.now().isoformat())
+        redis.expire(key, ttl.seconds - 5)  # 5 seconds shorter
     else:
         mailcount = int(mailcount)
         timestamp = datetime.fromisoformat(timestamp.decode('utf-8'))
@@ -57,7 +57,7 @@ def task_send_mail(
             )
             return
         else:  # rate not exceeded; OK increase  mailcount
-            r.hset(key, 'mailcount', mailcount + 1)
+            redis.hset(key, 'mailcount', mailcount + 1)
     # --------------------------------------------
 
     mail = MailFactory(config=config)

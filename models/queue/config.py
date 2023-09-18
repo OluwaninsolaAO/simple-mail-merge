@@ -10,8 +10,12 @@
 # $ celery -A <path-to-queue> worker --loglevel=info
 # ----------------------------------------------------------------
 
-broker_url = 'redis://localhost:6379/0'
-result_backend = 'redis://localhost:6379/0'
+from os import getenv
+
+REDIS_URL = getenv('REDIS_URL')
+
+broker_url = REDIS_URL
+result_backend = REDIS_URL
 # result_backend = 'db+sqlite:///queue.sqlite'
 broker_connection_retry_on_startup = True
 worker_concurrency = 1
