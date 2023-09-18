@@ -4,12 +4,12 @@ import ToggleMenu from "./ToggleMenu";
 
 function Navbar() {
   return (
-    <div className="fixed top-0 left-0 w-full bg-amber-100">
+    <div className="fixed top-0 left-0 w-full bg-white">
       <nav className="flex justify-between mx-5 md:mx-12 my-5 items-center w-full">
         <div className="">
           <Link
             href="/"
-            className="text-xl md:text-2xl font-semibold text-content text-amber-600 hover:text-amber-500"
+            className="text-xl md:text-2xl font-semibold text-content text-blue hover:text-blue"
           >
             <Image
               src="/LockUps/VerticalLockUp.png"
@@ -21,12 +21,12 @@ function Navbar() {
           </Link>
         </div>
         <ToggleMenu />
-        <div className="text-amber-500 hidden sm:block mr-20">
-          <Link href="/signup" className="btn">
+        <div className="text-blue hidden sm:block mr-20">
+          <Link href="/signup" className="btn mr-2">
             Sign Up
           </Link>
-          <Link href="/signin" className="btn ml-2">
-            Sign In
+          <Link href="/signin" className="btn ml-2 mr-12">
+            Log In
           </Link>
         </div>
       </nav>

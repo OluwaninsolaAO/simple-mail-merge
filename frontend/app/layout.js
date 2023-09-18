@@ -1,11 +1,12 @@
 import "./globals.css";
 import { Rubik } from "next/font/google";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Simple Mail Merge",
+  title: "Mail Merge",
   description: "A Mail Merging Solution",
 };
 
@@ -17,6 +18,9 @@ export default function RootLayout({ children }) {
           <Navbar />
         </div>
         {children}
+        <div className="">
+          <Footer />
+        </div>
       </body>
     </html>
   );
