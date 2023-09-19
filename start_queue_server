@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+celery -A models.queue worker --loglevel=info
