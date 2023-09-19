@@ -51,7 +51,9 @@ export default function SignInForm() {
               />
             </div>
             <div className="mt-5">
-              <button className="w-full bg-blue py-3 text-center text-white hover:bg-white hover:text-blue border hover:border-blue transition ease-out duration-300">Log In</button>
+              <button className="w-full bg-blue py-3 text-center text-white hover:bg-white hover:text-blue border hover:border-blue transition ease-out duration-300">
+                Log In
+              </button>
             </div>
           </form>
           <p className="mt-3">
