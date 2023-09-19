@@ -30,8 +30,11 @@ class UserAuth:
 
     def is_valid_password(self, password: str) -> bool:
         """Validate if password is a valid user password"""
+        user_password = self.password
+        if isinstance(user_password, str):
+            user_password = user_password.encode('utf-8')
         return bcrypt.checkpw(
-            password.encode('utf-8'), self._password.encode('utf-8')
+            password.encode('utf-8'), user_password
         )
 
     def is_valid_reset_token(self, reset_token: str) -> bool:

@@ -2,9 +2,10 @@
 """Get post/put data from flask request"""
 
 from flask import request
+from typing import Dict
 
 
-def postdata() -> dict[str, str]:
+def postdata() -> Dict[str, str]:
     """Return obj of <class 'dict'> or None"""
     if request.get_json(silent=True):
         data = request.get_json(silent=True)
@@ -16,11 +17,11 @@ def postdata() -> dict[str, str]:
     return data.copy()
 
 
-def postjson() -> dict[str, str]:
+def postjson() -> Dict[str, str]:
     """Return obj of <class 'dict'> or None"""
     return request.get_json(silent=True)
 
 
-def postform() -> dict[str, str]:
+def postform() -> Dict[str, str]:
     """Return obj of <class 'dict'> or None"""
     return request.form
