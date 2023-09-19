@@ -42,7 +42,7 @@ def sendmail_to_recipients():
         abort(401)
 
     try:
-        recipients = Recipient.csv_to_list(
+        recipients = Recipient.json_to_list(
             data=maildata.get('recipients')
         )
     except Exception as exc:
