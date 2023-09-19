@@ -9,7 +9,7 @@ body {
 }
 
 .btn {
-  @apply border-2 p-2 py-1 font-medium border-blue rounded hover:bg-blue hover:text-white transition ease-out duration-300;
+  @apply border p-2 py-1 font-medium border-blue rounded hover:bg-blue hover:text-white transition ease-out duration-300;
 }
 
 .submit-btn {
