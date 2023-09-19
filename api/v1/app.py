@@ -13,7 +13,7 @@ app.url_map.strict_slashes = False
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 app.config.from_object(AppConfig)
 app.register_blueprint(app_views)
-CORS(app, resources={r'/v1/*': {'origins': '*'}},
+CORS(app, resources={r'/api/v1/*': {'origins': '*'}},
      supports_credentials=True)
 
 

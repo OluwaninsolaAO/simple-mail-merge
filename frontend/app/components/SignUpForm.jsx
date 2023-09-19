@@ -5,23 +5,49 @@ import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
 import ErrorAlert from "./ErrorAlert";
+import {useNavigate} from "react-dom";
 
 export default function SignUpForm() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [error, setError] = useState(false);
+  const [created, setCreated] = useState(false);
+  const postUrl = "http://0.0.0.0:5000/api/v1/users";
+  const router = useRouter();
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setError(false);
+
     if (password !== password2) {
       setError("Password Mismatch!");
       return;
     }
-    response
-    console.log(email, password, firstName, lastName);
+
+    const formData = {
+      firstname,
+      lastname,
+      email,
+      phone,
+      password,
+      address,
+    };
+    try {
+      const response = await axios.post(postUrl, formData);
+      console.log(response);
+      setSuccess(true);
+      setTimeout(() => {
+        router.push('/smtp-config');
+      }, 2000);
+    } catch (err) {
+      console.log(err);
+      setError("Error! Please try again...");
+    }
   }
 
   return (
@@ -36,25 +62,25 @@ export default function SignUpForm() {
           />
         </div>
         <div className="w-full lg:w-1/2 py-16 px-12">
-          {error && <ErrorAlert message={error}/>}
+          {error && <ErrorAlert message={error} />}
           <h2 className="text-3xl mb-4">Sign Up</h2>
           <p className="mb-4">Create an account to get started.</p>
           <form onSubmit={handleSubmit} className="">
             <div className="flex flex-col lg:flex-row">
               <input
                 type="text"
-                placeholder="Firstname"
+                placeholder="First Name"
                 id="firstName"
-                value={firstName}
+                value={firstname}
                 onChange={(e) => setFirstName(e.target.value)}
                 required
-                className="border border-blue py-1 px-2 mr-2"
+                className="border border-blue py-1 px-2 mr-2 mb-2"
               />
               <input
                 type="text"
-                placeholder="Lastname"
+                placeholder="Last Name"
                 id="lastName"
-                value={lastName}
+                value={lastname}
                 onChange={(e) => setLastName(e.target.value)}
                 required
                 className="border border-blue py-1 px-2"
@@ -89,6 +115,28 @@ export default function SignUpForm() {
                 id="password2"
                 value={password2}
                 onChange={(e) => setPassword2(e.target.value)}
+                required
+                className="border border-blue py-1 px-2 w-full"
+              />
+            </div>
+            <div className="mt-5">
+              <input
+                type="phone"
+                placeholder="Phone No"
+                id="phone"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                required
+                className="border border-blue py-1 px-2 w-full"
+              />
+            </div>
+            <div className="mt-5">
+              <input
+                type="text"
+                placeholder="Address"
+                id="address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
                 required
                 className="border border-blue py-1 px-2 w-full"
               />
