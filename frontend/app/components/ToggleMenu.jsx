@@ -10,7 +10,7 @@ export default function ToggleMenu() {
   const pathname = usePathname();
 
   return (
-    <div className="text-amber-500 md:flex text-center mr-12 h-20">
+    <div className="text-blue md:flex text-center mr-12 h-20">
       <button
         className="sm:hidden btn mt-4"
         onClick={() => {
@@ -23,7 +23,7 @@ export default function ToggleMenu() {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="w-6 h-6"
+          className="w-6 h-6"
         >
           <path
             stroke-linecap="round"
@@ -37,7 +37,7 @@ export default function ToggleMenu() {
           <Link
             href="/signup"
             className={`my-2 text-sm font-semibold ${
-              pathname == "/signup" ? "border-b-2 border-amber-600 pb-1" : ""
+              pathname == "/signup" ? "border-b-2 border-blue pb-1" : ""
             }`}
           >
             Sign Up
@@ -45,7 +45,7 @@ export default function ToggleMenu() {
           <Link
             href="/signin"
             className={`my-2 text-sm font-semibold ${
-              pathname == "/signin" ? "border-b-2 border-amber-600 pb-1" : ""
+              pathname == "/signin" ? "border-b-2 border-blue pb-1" : ""
             }`}
           >
             Sign In
