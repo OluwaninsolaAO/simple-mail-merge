@@ -11,7 +11,7 @@ from models.enums import UserRole
 
 
 @app_views.route('/users', methods=['GET'])
-# @login_required([UserRole.admin, UserRole.moderator])
+@login_required([UserRole.admin, UserRole.moderator])
 def get_users():
     """Return all users in storage"""
 

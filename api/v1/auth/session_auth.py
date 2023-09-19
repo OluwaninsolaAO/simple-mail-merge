@@ -8,7 +8,6 @@ from models.user import User
 from os import getenv
 
 token_name = getenv('AUTH_TOKEN_NAME_ON_HEADER')
-REDIS_URL = getenv('REDIS_URL')
 AUTH_TTL = getenv('AUTH_TTL', 259200)
 
 
