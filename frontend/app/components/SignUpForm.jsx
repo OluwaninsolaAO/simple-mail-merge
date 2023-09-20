@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
 import ErrorAlert from "./ErrorAlert";
-import {useNavigate} from "react-dom";
+import { useRouter } from "next/navigation";
 
 export default function SignUpForm() {
   const [firstname, setFirstName] = useState("");
@@ -17,7 +17,7 @@ export default function SignUpForm() {
   const [password2, setPassword2] = useState("");
   const [error, setError] = useState(false);
   const [created, setCreated] = useState(false);
-  const postUrl = "http://0.0.0.0:5000/api/v1/users";
+  const postUrl = "http://epicsprint.tech/api/v1/users";
   const router = useRouter();
 
   async function handleSubmit(e) {
@@ -37,12 +37,15 @@ export default function SignUpForm() {
       password,
       address,
     };
+
     try {
-      const response = await axios.post(postUrl, formData);
+      const response = await axios.post('http://0.0.0.0:5000/api/v1/users', formData, {
+        headers: {'Content-Type':'application/json'},
+      });
       console.log(response);
-      setSuccess(true);
+      setCreated(true);
       setTimeout(() => {
-        router.push('/smtp-config');
+        router.push('/login');
       }, 2000);
     } catch (err) {
       console.log(err);
@@ -124,6 +127,7 @@ export default function SignUpForm() {
                 type="phone"
                 placeholder="Phone No"
                 id="phone"
+                maxLength={15}
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 required
