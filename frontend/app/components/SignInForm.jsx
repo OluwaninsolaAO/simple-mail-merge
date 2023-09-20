@@ -20,15 +20,18 @@ export default function SignInForm() {
     setError("");
     setSuccess("");
     try {
-      const formData = {email, password};
-      const response = await axios.post('http://0.0.0.0:5000/api/v1/login', formData);
+      const formData = { email, password };
+      const response = await axios.post(
+        "http://0.0.0.0:5000/api/v1/login",
+        formData
+      );
       console.log(response);
-      sessionStorage.token = JSON.stringify(response.data['auth-token']);
+      sessionStorage.token = JSON.stringify(response.data["auth-token"]);
       setSuccess("Sign in successful! Redirecting...");
       setTimeout(() => {
-        router.push('/smtp-config');
+        router.push("/smtp-config");
       }, 3000);
-    } catch(err) {
+    } catch (err) {
       console.log(err);
       err.response?.status === 404 && setError("User does not exist");
       err.response?.status === 401 && setError(err.response?.data.message);
@@ -47,8 +50,10 @@ export default function SignInForm() {
           />
         </div>
         <div className="w-full lg:w-1/2 py-16 px-12">
-        {error && <ErrorAlert message={error} setError={setError} />}
-          {success && <SuccessAlert message={success} setSuccess={setSuccess}/>}
+          {error && <ErrorAlert message={error} setError={setError} />}
+          {success && (
+            <SuccessAlert message={success} setSuccess={setSuccess} />
+          )}
           <h2 className="text-3xl mb-4">Log In</h2>
           <p className="mb-4">Log in to your account.</p>
           <form onSubmit={handleSubmit} className="">

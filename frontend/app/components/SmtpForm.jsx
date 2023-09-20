@@ -1,9 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import CustomSMTPForm from "./CustomSMTPForm";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import ErrorAlert from "./ErrorAlert";
@@ -12,9 +9,7 @@ import SuccessAlert from "./SuccessAlert";
 export default function SmtpForm() {
   const url = "http://0.0.0.0:5000/api/v1";
   const router = useRouter();
-  const token =
-    sessionStorage.token &&
-    sessionStorage.getItem("token").replace(/["']/g, "");
+  const token = sessionStorage.getItem("token").replace(/["']/g, "");
   const [selectedConfig, setSelectedConfig] = useState(null);
   const [smtpConfig, setConfig] = useState(null);
   const [username, setUsername] = useState("");
