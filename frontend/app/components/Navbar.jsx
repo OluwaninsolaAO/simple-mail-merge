@@ -3,11 +3,24 @@
 import Link from "next/link";
 import Image from "next/image";
 import ToggleMenu from "./ToggleMenu";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import axios from "axios";
 
 function Navbar() {
   const openPaths = ['/', '/signin', '/signup'];
   const currentPath = usePathname();
+  const router = useRouter();
+
+  async function handleLogout() {
+    const response = await axios.delete('http://0.0.0.0:5000/api/v1/logout', {
+      headers: {
+        "auth-token": sessionStorage.getItem('token').replace(/["']/g, '')
+      }
+    });
+    console.log(response);
+    delete sessionStorage.token;
+    router.push('/signin');
+  }
 
   return (
     <div className="fixed top-0 left-0 w-full bg-white">
@@ -38,9 +51,9 @@ function Navbar() {
               </Link>
             </>
           ) : (
-            <Link href="/signin" className="btn ml-2 mr-12">
+            <button className="btn ml-2 mr-12" onClick={handleLogout}>
               Log Out
-            </Link>
+            </button>
           )}
         </div>
       </nav>

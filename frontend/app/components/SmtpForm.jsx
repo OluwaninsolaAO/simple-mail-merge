@@ -17,7 +17,7 @@ export default function SmtpForm() {
     {
       username: "gmail",
       alias: "Gmail",
-      password: "gmail-password",
+      password: null,
       server: "smtp.gmail.com",
       port: "587",
       rate: "100",
@@ -25,7 +25,7 @@ export default function SmtpForm() {
     {
       username: "yahoo",
       alias: "Yahoo",
-      password: "yahoo-password",
+      password: null,
       server: "smtp.mail.yahoo.com",
       port: "465",
       rate: "100",

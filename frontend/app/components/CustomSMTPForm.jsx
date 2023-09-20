@@ -4,16 +4,25 @@ import React from "react";
 import { useState } from "react";
 
 export default function CustomSMTPForm() {
-  const [userName, setUserName] = useState("");
+  const [username, setUserName] = useState("");
   const [alias, setAlias] = useState("");
   const [password, setPassword] = useState("");
-  const [smtpServer, setSmtpServer] = useState("");
-  const [smtpPort, setSmtpPort] = useState("");
-  const [smtpRate, setSmtpRate] = useState("");
+  const [server, setSmtpServer] = useState("");
+  const [port, setSmtpPort] = useState("");
+  const [rate, setSmtpRate] = useState("");
+  const url = 'http://0.0.0.0:5000/api/v1';
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    console.log(userName, alias, smtpServer, smtpPort, smtpRate);
+    const smtpData = {
+        username,
+        alias,
+        password,
+        server,
+        port,
+        rate
+    }
+    console.log(smtpData);
   }
 
   return (
@@ -24,9 +33,9 @@ export default function CustomSMTPForm() {
         <div className="mt-2">
           <input
             type="text"
-            placeholder="Username"
+            placeholder="User Name"
             id="username"
-            value={userName}
+            value={username}
             onChange={(e) => setUserName(e.target.value)}
             required
             className="border border-blue py-1 px-2 w-full"
@@ -59,7 +68,7 @@ export default function CustomSMTPForm() {
             type="text"
             placeholder="SMTP Server"
             id="smtpServer"
-            value={smtpServer}
+            value={server}
             onChange={(e) => setSmtpServer(e.target.value)}
             required
             className="border border-blue py-1 px-2 w-full"
@@ -70,7 +79,7 @@ export default function CustomSMTPForm() {
             type="text"
             placeholder="SMTP Port"
             id="smtpPort"
-            value={smtpPort}
+            value={port}
             onChange={(e) => setSmtpPort(e.target.value)}
             required
             className="border border-blue py-1 px-2 w-full"
@@ -81,7 +90,7 @@ export default function CustomSMTPForm() {
             type="text"
             placeholder="SMTP Rate"
             id="smtpRate"
-            value={smtpRate}
+            value={rate}
             onChange={(e) => setSmtpRate(e.target.value)}
             required
             className="border border-blue py-1 px-2 w-full"

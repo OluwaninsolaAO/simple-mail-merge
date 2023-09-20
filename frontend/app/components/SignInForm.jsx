@@ -24,7 +24,7 @@ export default function SignInForm() {
       const response = await axios.post('http://0.0.0.0:5000/api/v1/login', formData);
       console.log(response);
       sessionStorage.token = JSON.stringify(response.data['auth-token']);
-      setSuccess("Sign in successful!");
+      setSuccess("Sign in successful! Redirecting...");
       setTimeout(() => {
         router.push('/smtp-config');
       }, 3000);
