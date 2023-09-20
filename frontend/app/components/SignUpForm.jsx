@@ -41,9 +41,7 @@ export default function SignUpForm() {
     };
 
     try {
-      const response = await axios.post('http://0.0.0.0:5000/api/v1/users', formData, {
-        headers: {'Content-Type':'application/json'},
-      });
+      const response = await axios.post('http://0.0.0.0:5000/api/v1/users', formData);
       console.log(response);
       setCreated("Account created successfully!");
       setTimeout(() => {
