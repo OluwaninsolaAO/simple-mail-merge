@@ -1,8 +1,27 @@
+"use client"
+
 import Link from "next/link";
 import Image from "next/image";
 import ToggleMenu from "./ToggleMenu";
+import { usePathname, useRouter } from "next/navigation";
+import axios from "axios";
 
 function Navbar() {
+  const openPaths = ['/', '/signin', '/signup'];
+  const currentPath = usePathname();
+  const router = useRouter();
+
+  async function handleLogout() {
+    const response = await axios.delete('http://0.0.0.0:5000/api/v1/logout', {
+      headers: {
+        "auth-token": sessionStorage.getItem('token').replace(/["']/g, '')
+      }
+    });
+    console.log(response);
+    delete sessionStorage.token;
+    router.push('/signin');
+  }
+
   return (
     <div className="fixed top-0 left-0 w-full bg-white">
       <nav className="flex justify-between mx-5 md:mx-12 my-5 items-center w-full">
@@ -22,12 +41,20 @@ function Navbar() {
         </div>
         <ToggleMenu />
         <div className="text-blue hidden sm:block mr-20">
-          <Link href="/signup" className="btn mr-2">
-            Sign Up
-          </Link>
-          <Link href="/signin" className="btn ml-2 mr-12">
-            Log In
-          </Link>
+          {openPaths.includes(currentPath) ? (
+            <>
+              <Link href="/signup" className="btn mr-2">
+                Sign Up
+              </Link>
+              <Link href="/signin" className="btn ml-2 mr-12">
+                Log In
+              </Link>
+            </>
+          ) : (
+            <button className="btn ml-2 mr-12" onClick={handleLogout}>
+              Log Out
+            </button>
+          )}
         </div>
       </nav>
     </div>

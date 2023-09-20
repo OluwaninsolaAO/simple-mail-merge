@@ -5,7 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
 import ErrorAlert from "./ErrorAlert";
-import {useNavigate} from "react-dom";
+import { useRouter } from "next/navigation";
+import SuccessAlert from "./SuccessAlert";
 
 export default function SignUpForm() {
   const [firstname, setFirstName] = useState("");
@@ -17,12 +18,13 @@ export default function SignUpForm() {
   const [password2, setPassword2] = useState("");
   const [error, setError] = useState(false);
   const [created, setCreated] = useState(false);
-  const postUrl = "http://0.0.0.0:5000/api/v1/users";
+  const postUrl = "http://epicsprint.tech/api/v1/users";
   const router = useRouter();
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setError(false);
+    setError("");
+    setCreated("");
 
     if (password !== password2) {
       setError("Password Mismatch!");
@@ -37,14 +39,16 @@ export default function SignUpForm() {
       password,
       address,
     };
+
     try {
-      const response = await axios.post(postUrl, formData);
+      const response = await axios.post('http://0.0.0.0:5000/api/v1/users', formData);
       console.log(response);
-      setSuccess(true);
+      setCreated("Account created successfully!");
       setTimeout(() => {
-        router.push('/smtp-config');
-      }, 2000);
+        router.push('/signin');
+      }, 3000);
     } catch (err) {
+      setCreated("");
       console.log(err);
       setError("Error! Please try again...");
     }
@@ -62,7 +66,8 @@ export default function SignUpForm() {
           />
         </div>
         <div className="w-full lg:w-1/2 py-16 px-12">
-          {error && <ErrorAlert message={error} />}
+          {error && <ErrorAlert message={error} setError={setError} />}
+          {created && <SuccessAlert message={created} setSuccess={setCreated}/>}
           <h2 className="text-3xl mb-4">Sign Up</h2>
           <p className="mb-4">Create an account to get started.</p>
           <form onSubmit={handleSubmit} className="">
@@ -124,6 +129,7 @@ export default function SignUpForm() {
                 type="phone"
                 placeholder="Phone No"
                 id="phone"
+                maxLength={15}
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 required
