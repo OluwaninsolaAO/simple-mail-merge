@@ -41,22 +41,22 @@ def sendmail_to_recipients():
     if config.user is not g.user:
         abort(401)
 
-    try:
-        recipients = Recipient.json_to_list(
-            data=maildata.get('recipients')
-        )
-    except Exception as exc:
-        return jsonify({
-            "status": "error",
-            "message": str(exc),
-            "data": None
-        }), 400
+    # try:
+    #     recipients = Recipient.json_to_list(
+    #         data=maildata.get('recipients')
+    #     )
+    # except Exception as exc:
+    #     return jsonify({
+    #         "status": "error",
+    #         "message": str(exc),
+    #         "data": None
+    #     }), 400
 
     fields: dict = {
         'config': config.to_dict(detailed=True),
         'Subject': data.get('subject'),
         'body': data.get('body'),
-        'recipients': recipients,
+        'recipients': maildata.get('recipients'),
         'content_type': 'html',
     }
     task_bulk_send.apply_async(kwargs=fields)
