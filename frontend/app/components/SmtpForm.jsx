@@ -1,34 +1,54 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import CustomSMTPForm from "./CustomSMTPForm";
+import axios from "axios";
 
 export default function SmtpForm() {
+  const url = 'http://0.0.0.0:5000/api/v1';
   const [selectedConfig, setSelectedConfig] = useState(null);
+  const [config, setConfig] = useState("");
+  const [error, setError] = useState("");
+  const [added, setAdded] = useState("");
+  const [userConfigs, setUserConfigs] = useState([]);
   const smtpConfigurations = [
     {
       username: "gmail",
       alias: "Gmail",
       password: "gmail-password",
-      smtpServer: "smtp.gmail.com",
-      smtpPort: "587",
-      smtpRate: "100",
+      server: "smtp.gmail.com",
+      port: "587",
+      rate: "100",
     },
     {
       username: "yahoo",
       alias: "Yahoo",
       password: "yahoo-password",
-      smtpServer: "smtp.mail.yahoo.com",
-      smtpPort: "465",
-      smtpRate: "100",
+      server: "smtp.mail.yahoo.com",
+      port: "465",
+      rate: "100",
     },
+    ...userConfigs
   ];
 
-  function handleSubmit(e) {
+  useEffect(() => {
+    async function fetchUserConfigs() {
+      const response = await axios.get(`${url}/configs`, {
+        headers: {
+          "auth-token": sessionStorage.getItem('token').replace(/["']/g, '')
+        }
+      });
+      console.log(response.data.message);
+      setUserConfigs(response.data.data.configs);
+    }
+    fetchUserConfigs();
+  }, []);
+
+  async function handleSubmit(e) {
     e.preventDefault();
-    console.log(userName, alias, smtpServer, smtpPort, smtpRate);
+    console.log(config);
   }
 
   return (
@@ -54,7 +74,10 @@ export default function SmtpForm() {
                     name="smtpConfig"
                     value={config.username}
                     checked={selectedConfig === config.username}
-                    onChange={() => setSelectedConfig(config.username)}
+                    onChange={() => {
+                      setSelectedConfig(config.username);
+                      setConfig(config);
+                    }}
                     style={{ width: "16px", height: "16px" }}
                     className="mr-2"
                   />
@@ -76,25 +99,26 @@ export default function SmtpForm() {
                 </div>
                 <div className="flex justify-between">
                   <p className="">SMTP Server:</p>
-                  <p className="">{config.smtpServer}</p>
+                  <p className="">{config.server}</p>
                 </div>
                 <div className="flex justify-between">
                   <p className="">SMTP Port:</p>
-                  <p className="">{config.smtpPort}</p>
+                  <p className="">{config.port}</p>
                 </div>
                 <div className="flex justify-between">
                   <p className="">SMTP Rate:</p>
-                  <p className="">{config.smtpRate}</p>
+                  <p className="">{config.rate}</p>
                 </div>
               </div>
             </div>
           ))}
           <div className="mt-2">
-            <Link href="/home">
-              <button className="w-full bg-blue py-3 text-center text-white hover:bg-white hover:text-blue border hover:border-blue transition ease-out duration-300">
-                Save SMTP Configuration
-              </button>
-            </Link>
+            <button
+              className="w-full bg-blue py-3 text-center text-white hover:bg-white hover:text-blue border hover:border-blue transition ease-out duration-300"
+              onClick={handleSubmit}
+            >
+              Save SMTP Configuration
+            </button>
           </div>
         </div>
         <CustomSMTPForm />
