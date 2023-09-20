@@ -54,7 +54,7 @@ function Navbar() {
           ) : (
             <>
               {currentPath === "/smtp-config" && (
-                <button className="btn ml-2 mr-12" onClick={() => router.push("/sendmail")}>
+                <button className="btn ml-2 mr-2" onClick={() => router.push("/sendmail")}>
                   Send Mail
                 </button>
               )}
