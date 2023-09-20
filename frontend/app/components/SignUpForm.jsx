@@ -6,6 +6,7 @@ import Image from "next/image";
 import axios from "axios";
 import ErrorAlert from "./ErrorAlert";
 import { useRouter } from "next/navigation";
+import SuccessAlert from "./SuccessAlert";
 
 export default function SignUpForm() {
   const [firstname, setFirstName] = useState("");
@@ -22,7 +23,8 @@ export default function SignUpForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setError(false);
+    setError("");
+    setCreated("");
 
     if (password !== password2) {
       setError("Password Mismatch!");
@@ -43,11 +45,12 @@ export default function SignUpForm() {
         headers: {'Content-Type':'application/json'},
       });
       console.log(response);
-      setCreated(true);
+      setCreated("Account created successfully!");
       setTimeout(() => {
-        router.push('/login');
-      }, 2000);
+        router.push('/signin');
+      }, 3000);
     } catch (err) {
+      setCreated("");
       console.log(err);
       setError("Error! Please try again...");
     }
@@ -65,7 +68,8 @@ export default function SignUpForm() {
           />
         </div>
         <div className="w-full lg:w-1/2 py-16 px-12">
-          {error && <ErrorAlert message={error} />}
+          {error && <ErrorAlert message={error} setError={setError} />}
+          {created && <SuccessAlert message={created} setSuccess={setCreated}/>}
           <h2 className="text-3xl mb-4">Sign Up</h2>
           <p className="mb-4">Create an account to get started.</p>
           <form onSubmit={handleSubmit} className="">

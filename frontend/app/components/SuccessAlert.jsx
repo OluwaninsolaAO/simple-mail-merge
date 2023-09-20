@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react'
 
-export default function ErrorAlert(props) {
+export default function SuccessAlert(props) {
   return (
-    <div className="mb-3 flex justify-center rounded bg-red-100 text-red-500 text-sm p-3.5">
+    <div className="mb-3 flex justify-center rounded bg-green-100 text-green-600 text-sm p-3.5">
       <p className="ml-auto">{props.message}</p>
-      <button className="ml-auto" onClick={() => props.setError("")}>
+      <button className="ml-auto" onClick={() => props.setSuccess("")}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -21,5 +21,6 @@ export default function ErrorAlert(props) {
         </svg>
       </button>
     </div>
-  );
+  )
 }
+
