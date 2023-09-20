@@ -3,7 +3,7 @@ import MailImage from "../public/mail-img.svg";
 
 export default function Home() {
   return (
-    <main className="flex min-h-full flex justify-between p-24">
+    <main className="flex min-h-full justify-between p-24">
       <div className="md:grid grid-cols-2 items-center">
         <div className="">
           <h4 className="font-bold text-4xl mb-3 text-blue">
@@ -16,7 +16,7 @@ export default function Home() {
             and let the application handle the rest.
           </p>
           <p className="text-black text-lg mb-3">
-            Whether you're sending out newsletters, invitations, or announcements 
+            Whether you are sending out newsletters, invitations, or announcements 
             to a large audience, Mail Merge ensures a personal touch in every message.
           </p>
         </div>
