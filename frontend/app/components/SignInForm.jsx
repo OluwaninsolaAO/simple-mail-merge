@@ -23,6 +23,7 @@ export default function SignInForm() {
       const formData = {email, password};
       const response = await axios.post('http://0.0.0.0:5000/api/v1/login', formData);
       console.log(response);
+      sessionStorage.token = JSON.stringify(response.data.auth-token);
       setSuccess("Sign in successful!");
       setTimeout(() => {
         router.push('/smtp-config');
