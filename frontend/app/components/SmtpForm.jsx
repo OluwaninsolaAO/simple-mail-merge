@@ -6,6 +6,8 @@ import Image from "next/image";
 import CustomSMTPForm from "./CustomSMTPForm";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import ErrorAlert from "./ErrorAlert";
+import SuccessAlert from "./SuccessAlert";
 
 export default function SmtpForm() {
   const url = "http://0.0.0.0:5000/api/v1";
@@ -97,7 +99,23 @@ export default function SmtpForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(smtpConfig);
+    try {
+      const response = await axios.post(`${url}/configs`, smtpConfig, {
+        headers: {
+          "auth-token": token
+        }
+      });
+      console.log(response);
+      setAdded("Configuration added successfully!!");
+      setError("");
+      setTimeout(() => {
+        router.push('/sendmail');
+      }, 3000);
+    } catch (err) {
+      setError(err.response?.data?.message);
+      console.log(err);
+      setAdded("");
+    }
   }
 
   return (
@@ -163,6 +181,8 @@ export default function SmtpForm() {
         </div>
         <div className="w-full lg:w-1/2 py-16 pt-8 px-12 text-center">
           {/* The user will be able to set up a new SMTP configuration here */}
+          {error && <ErrorAlert message={error}/>}
+          {added && <SuccessAlert message={added}/>}
           <h2 className="text-3xl mb-4">Custom SMTP Configuration</h2>
           <form onSubmit={handleSubmit} className="">
             <div className="mt-2">
