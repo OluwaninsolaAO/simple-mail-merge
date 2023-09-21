@@ -178,7 +178,7 @@ export default function SmtpForm() {
           {/* The user will be able to set up a new SMTP configuration here */}
           {error && <ErrorAlert message={error}/>}
           {added && <SuccessAlert message={added}/>}
-          <h2 className="text-3xl mb-4">Custom SMTP Configuration</h2>
+          <h2 className="text-3xl mb-4">SMTP Configuration</h2>
           <form onSubmit={handleSubmit} className="">
             <div className="mt-2">
               <input
