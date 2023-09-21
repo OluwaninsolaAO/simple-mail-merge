@@ -53,7 +53,7 @@ function Navbar() {
             </>
           ) : (
             <div>
-              <button className="btn mr-2" onClick={() => router.push('/home')}>
+              <button className="btn mr-2" onClick={() => router.push('/sendmail')}>
                 Write Mail
               </button>
               <button className="btn ml-2" onClick={() => router.push('/contacts')}>
