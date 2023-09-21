@@ -52,21 +52,20 @@ function Navbar() {
               </Link>
             </>
           ) : (
-            <>
-              {(currentPath === "/smtp-config" || currentPath === "/") && (
-                <button className="btn ml-2 mr-2" onClick={() => router.push("/sendmail")}>
-                  Send Mail
-                </button>
-              )}
-              {(currentPath === "/sendmail" || currentPath === "/") && (
-                <button className="btn ml-2 mr-2" onClick={() => router.push("/smtp-config")}>
-                  SMTP Configuration
-                </button>
-              )}
+            <div>
+              <button className="btn mr-2" onClick={() => router.push('/home')}>
+                Write Mail
+              </button>
+              <button className="btn ml-2" onClick={() => router.push('/contacts')}>
+                Contacts
+              </button>
+              <button className="btn ml-2" onClick={() => router.push('/smtp-config')}>
+                SMTP Configuration
+              </button>
               <button className="btn ml-2 mr-12" onClick={handleLogout}>
                 Log Out
               </button>
-            </>
+            </div>
           )}
         </div>
       </nav>
