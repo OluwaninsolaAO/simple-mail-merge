@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function SuccessAlert(props) {
   return (
-    <div className="mb-3 flex justify-center rounded bg-green-100 text-green-600 text-sm p-3.5">
+    <div className="mb-3 flex justify-center rounded bg-indigo-100 text-indigo-600 text-sm p-3.5">
       <p className="ml-auto">{props.message}</p>
       <button className="ml-auto" onClick={() => props.setSuccess("")}>
         <svg

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -7,19 +7,20 @@ import { usePathname, useRouter } from "next/navigation";
 import axios from "axios";
 
 function Navbar() {
-  const openPaths = ['/', '/signin', '/signup'];
+  const openPaths = ["/", "/signin", "/signup"];
   const currentPath = usePathname();
   const router = useRouter();
+  const token = sessionStorage.getItem("token");
 
   async function handleLogout() {
-    const response = await axios.delete('http://0.0.0.0:5000/api/v1/logout', {
+    const response = await axios.delete("http://0.0.0.0:5000/api/v1/logout", {
       headers: {
-        "auth-token": sessionStorage.getItem('token').replace(/["']/g, '')
-      }
+        "auth-token": sessionStorage.getItem("token").replace(/["']/g, ""),
+      },
     });
     console.log(response);
-    delete sessionStorage.token;
-    router.push('/signin');
+    sessionStorage.clear();
+    router.push("/signin");
   }
 
   return (
@@ -41,7 +42,7 @@ function Navbar() {
         </div>
         <ToggleMenu />
         <div className="text-blue hidden sm:block mr-20">
-          {openPaths.includes(currentPath) ? (
+          {!token ? (
             <>
               <Link href="/signup" className="btn mr-2">
                 Sign Up
@@ -51,9 +52,21 @@ function Navbar() {
               </Link>
             </>
           ) : (
-            <button className="btn ml-2 mr-12" onClick={handleLogout}>
-              Log Out
-            </button>
+            <>
+              {(currentPath === "/smtp-config" || currentPath === "/") && (
+                <button className="btn ml-2 mr-2" onClick={() => router.push("/sendmail")}>
+                  Send Mail
+                </button>
+              )}
+              {(currentPath === "/sendmail" || currentPath === "/") && (
+                <button className="btn ml-2 mr-2" onClick={() => router.push("/smtp-config")}>
+                  SMTP Configuration
+                </button>
+              )}
+              <button className="btn ml-2 mr-12" onClick={handleLogout}>
+                Log Out
+              </button>
+            </>
           )}
         </div>
       </nav>
