@@ -50,7 +50,7 @@ const SendMail = () => {
 
   return (
     <div className="my-48">
-      <h2 className="text3xl">Send Email</h2>
+      <h2 className="text-3xl text-center">Send Mail</h2>
       <div className="lg:grid grid-cols-2 items-center justify-center ms-auto">
         <div className="px-20 mt-10">
           <input
