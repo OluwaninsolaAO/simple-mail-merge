@@ -10,6 +10,7 @@ const SendMail = () => {
   const [recipients, setRecipients] = useState("");
   const [contactFileInput, setContactFileInput] = useState(null);
   const [userConfigs, setUserConfigs] = useState([]);
+  const [smtpConfig, setSmtpConfig] = useState(null);
   const token = sessionStorage.getItem("token").replace(/["']/g, "");
   const url = "http://0.0.0.0:5000/api/v1";
 
@@ -26,6 +27,7 @@ const SendMail = () => {
       });
       console.log(response.data.message);
       setUserConfigs(response.data.data.configs);
+      console.log(response.data.data.configs);
     }
     fetchUserConfigs();
   }, []);
@@ -33,7 +35,7 @@ const SendMail = () => {
   const handleInputChange = (event) => {
     setBody(event.target.value);
   };
-
+  // console.log(smtpConfig)
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -63,7 +65,7 @@ const SendMail = () => {
             cols="50"
             value={body}
             onChange={handleInputChange}
-            className="w-full border-4 border-blue hover:border-orange-300 rounded hover:shadow-md"
+            className="w-full border-4 border-blue hover:border-indigo-300 rounded hover:shadow-md"
           />
           <div className="btn w-fit ">
             <input
@@ -98,7 +100,7 @@ const SendMail = () => {
             rows={10}
             col={10}
             onChange={(e) => setRecipients(e.target.value)}
-            className="w-full border-4 hover:border-orange-300 border-blue rounded"
+            className="w-full border-4 hover:border-indigo-300 border-blue rounded"
           />
           <div className="btn w-fit ">
             <input
@@ -122,10 +124,26 @@ const SendMail = () => {
             </button>
           </div>
         </div>
-        <div className="text-center.0">
-          <button type="select" className="">
-            Select SMTP
-          </button>
+        <div>
+          <h2>Select SMTP Configuration</h2>
+          <select
+            id="smtp-config"
+            value={smtpConfig}
+            onChange={(e) => setSmtpConfig(e.target.value)}
+            required
+          >
+            <option value="">Select SMTP Configuration</option>
+            {userConfigs.map((config) => (
+              <option key={config.id} value={JSON.stringify(config)}>
+                {config.alias}
+              </option>
+            ))}
+          </select>
+          <p>
+            {smtpConfig
+              ? `Using ${JSON.parse(smtpConfig).alias} SMTP Configuration`
+              : "No Configuration Selected"}
+          </p>
         </div>
       </div>
     </div>
