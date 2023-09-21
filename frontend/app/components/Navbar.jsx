@@ -72,7 +72,7 @@ function Navbar() {
                   className="btn ml-2 mr-2"
                   onClick={() => router.push("/smtp-config")}
                 >
-                  SMTP Configuration
+                  New SMTP Configuration
                 </button>
               )}
               <button className="btn ml-2 mr-12" onClick={handleLogout}>

@@ -20,7 +20,6 @@ export default function SmtpForm() {
   const [rate, setRate] = useState("");
   const [error, setError] = useState("");
   const [added, setAdded] = useState("");
-  const [userConfigs, setUserConfigs] = useState([]);
   const smtpConfigurations = [
     {
       predefined: true,
@@ -75,25 +74,12 @@ export default function SmtpForm() {
     }
   }, [selectedConfig, smtpConfig]);
 
-  useEffect(() => {
+  async function handleSubmit(e) {
+    e.preventDefault();
     if (!token) {
       router.push("/signin");
       return;
     }
-    async function fetchUserConfigs() {
-      const response = await axios.get(`${url}/configs`, {
-        headers: {
-          "auth-token": token,
-        },
-      });
-      console.log(response.data.message);
-      setUserConfigs(response.data.data.configs);
-    }
-    fetchUserConfigs();
-  }, []);
-
-  async function handleSubmit(e) {
-    e.preventDefault();
     try {
       const response = await axios.post(`${url}/configs`, smtpConfig, {
         headers: {
@@ -117,15 +103,9 @@ export default function SmtpForm() {
     <div className="container">
       <div className="flex flex-col lg:flex-row w-10/12 lg:w-8/12 items-center bg-white rounded mx-auto overflow-hidden">
         <div className="w-full lg:w-1/2 flex flex-col p-12">
-          {smtpConfigurations.length === 0 ? (
-            <p className="text-center">
-              You have not set up any SMTP configurations yet.
-            </p>
-          ) : (
-            <p className="mb-4">
-              Select an SMTP configuration to use for your mail merge.
-            </p>
-          )}
+          <p className="mb-4">
+              Add New SMTP Configuration
+          </p>
           {smtpConfigurations.map((config, index) => (
             <div
               className="flex flex-col mb-5 rounded bg-indigo-200 p-5"
