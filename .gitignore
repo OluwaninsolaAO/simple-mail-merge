@@ -1,3 +1,6 @@
 __pycache__/
 *.sqlite
 dump.sql
+dump.rdb
+*.swp
+*.swo

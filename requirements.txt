@@ -18,3 +18,4 @@ httplib2
 celery
 redis
 jinja2
+bcrypt

@@ -4,6 +4,7 @@ from models.enums import UserRole
 from api.v1.auth.session_auth import SessionAuth
 from api.v1.auth.cookie_auth import CookieAuth
 from os import getenv
+from models.queue.tasks import redis
 
 
 class AppConfig:
@@ -11,6 +12,6 @@ class AppConfig:
                   UserRole.customer, UserRole.editor, UserRole.member, UserRole.moderator, UserRole.user]
     AUTH = {
         'cookie': CookieAuth(),
-        'token': SessionAuth(),
+        'token': SessionAuth(redis=redis),
     }[getenv('AUTH_TYPE')]
     SECRET_KEY = getenv('API_SECRET_KEY')

@@ -3,14 +3,39 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import axios from "axios";
+import ErrorAlert from "./ErrorAlert";
+import SuccessAlert from "./SuccessAlert";
+import { useRouter } from "next/navigation";
 
 export default function SignInForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const router = useRouter();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    console.log(email, password);
+    setError("");
+    setSuccess("");
+    try {
+      const formData = { email, password };
+      const response = await axios.post(
+        "http://0.0.0.0:5000/api/v1/login",
+        formData
+      );
+      console.log(response);
+      sessionStorage.token = JSON.stringify(response.data["auth-token"]);
+      setSuccess("Sign in successful! Redirecting...");
+      setTimeout(() => {
+        router.push("/smtp-config");
+      }, 3000);
+    } catch (err) {
+      console.log(err);
+      err.response?.status === 404 && setError("User does not exist");
+      err.response?.status === 401 && setError(err.response?.data.message);
+    }
   }
 
   return (
@@ -25,6 +50,10 @@ export default function SignInForm() {
           />
         </div>
         <div className="w-full lg:w-1/2 py-16 px-12">
+          {error && <ErrorAlert message={error} setError={setError} />}
+          {success && (
+            <SuccessAlert message={success} setSuccess={setSuccess} />
+          )}
           <h2 className="text-3xl mb-4">Log In</h2>
           <p className="mb-4">Log in to your account.</p>
           <form onSubmit={handleSubmit} className="">
@@ -51,7 +80,9 @@ export default function SignInForm() {
               />
             </div>
             <div className="mt-5">
-              <button className="w-full bg-blue py-3 text-center text-white hover:bg-white hover:text-blue border hover:border-blue transition ease-out duration-300">Log In</button>
+              <button className="w-full bg-blue py-3 text-center text-white hover:bg-white hover:text-blue border hover:border-blue transition ease-out duration-300">
+                Log In
+              </button>
             </div>
           </form>
           <p className="mt-3">

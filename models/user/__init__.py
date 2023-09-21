@@ -35,6 +35,10 @@ class User(BaseModel, Base, UserAuth):
         """Overrides parent's defualt"""
         obj = super().to_dict()
 
+        # process rolebased data
+        if obj.get('role', None):
+            obj.update({'role': obj.get('role').to_dict()})
+
         # level - 1 heldback attributes
         attrs = ['_password', 'reset_token', 'smtp_configs', 'role']
         for attr in attrs:

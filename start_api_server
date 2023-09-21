@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+DEBUG=True python3 -m api.v1.app

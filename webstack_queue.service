@@ -1,0 +1,13 @@
+[Unit]
+Description=WebStack Project: Simple Mail Merge
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/simple-mail-merge
+ExecStart=/usr/local/bin/celery -A models.queue worker --loglevel=info
+StandardError=file:/tmp/queue-error.log
+StandardOutput=file:/tmp/queue-access.log
+
+[Install]
+WantedBy=multi-user.target

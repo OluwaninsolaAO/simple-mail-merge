@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Users URI Module"""
 
-from flask import abort, g
+from flask import abort, g, request
 from api.v1.views import (
     app_views, storage, jsonify, postdata, login_required)
 from models.user import User
@@ -11,7 +11,7 @@ from models.enums import UserRole
 
 
 @app_views.route('/users', methods=['GET'])
-# @login_required([UserRole.admin, UserRole.moderator])
+@login_required([UserRole.admin, UserRole.moderator])
 def get_users():
     """Return all users in storage"""
 
@@ -36,6 +36,26 @@ def get_user(user_id):
         "status": "success",
         "message": "User retrieved successfully",
         "data": user.to_dict(detailed=True)
+    })
+
+
+@app_views.route('/users/me', methods=['GET'])
+@login_required()
+def get_current_user():
+    """Returns a User that is currently logged
+
+    Query params:
+    + detailed :
+        = true : returns detailed data logged in User,
+        including sensitive informations.
+    """
+
+    detailed = request.args.get('detailed', False) == 'true'
+    user: User = g.user
+    return jsonify({
+        "status": "success",
+        "message": "Logged in user retrieved successfully",
+        "data": user.to_dict(detailed=detailed)
     })
 
 
