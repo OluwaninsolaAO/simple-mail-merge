@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import SMTPCard from "./SMTPCard";
 
 const SendMail = () => {
   const [body, setBody] = useState("");
@@ -124,26 +125,53 @@ const SendMail = () => {
             </button>
           </div>
         </div>
-        <div>
-          <h2>Select SMTP Configuration</h2>
-          <select
-            id="smtp-config"
-            value={smtpConfig}
-            onChange={(e) => setSmtpConfig(e.target.value)}
-            required
-          >
-            <option value="">Select SMTP Configuration</option>
-            {userConfigs.map((config) => (
-              <option key={config.id} value={JSON.stringify(config)}>
-                {config.alias}
-              </option>
-            ))}
-          </select>
-          <p>
-            {smtpConfig
-              ? `Using ${JSON.parse(smtpConfig).alias} SMTP Configuration`
-              : "No Configuration Selected"}
-          </p>
+        <div className="flex">
+          <div className="flex w-3/5 flex-col mb-5 text-center rounded text-indigo-900 bg-indigo-200 p-5">
+            <h2>SMTP Configuration</h2>
+            <select
+              id="smtp-config"
+              value={smtpConfig}
+              onChange={(e) => setSmtpConfig(e.target.value)}
+              required
+              className="text-center mt-2 p-3 border-indigo-900"
+            >
+              <option value="">Select SMTP Configuration</option>
+              {userConfigs.map((config) => (
+                <option key={config.id} value={JSON.stringify(config)}>
+                  {config.alias}
+                </option>
+              ))}
+            </select>
+            <p className="text-center m-3">
+              {smtpConfig
+                ? `Using ${JSON.parse(smtpConfig).alias} SMTP Configuration`
+                : "No Configuration Selected"}
+            </p>
+          </div>
+          {smtpConfig && <div className="flex w-3/5 flex-col mb-5 rounded mx-20 text-indigo-900 bg-indigo-200 p-5">
+            <div className="flex flex-col">
+              <div className="flex justify-between">
+                <p className="">Username:</p>
+                <p className="">{smtpConfig && JSON.parse(smtpConfig).username}</p>
+              </div>
+              <div className="flex justify-between">
+                <p className="">Alias:</p>
+                <p className="">{smtpConfig && JSON.parse(smtpConfig).alias}</p>
+              </div>
+              <div className="flex justify-between">
+                <p className="mr-auto">Server:</p>
+                <p className="">{smtpConfig && JSON.parse(smtpConfig).server}</p>
+              </div>
+              <div className="flex justify-between">
+                <p className="">Port:</p>
+                <p className="">{smtpConfig && JSON.parse(smtpConfig).port}</p>
+              </div>
+              <div className="flex justify-between">
+                <p className="">Rate:</p>
+                <p className="">{smtpConfig && JSON.parse(smtpConfig).rate}</p>
+              </div>
+            </div>
+          </div>}
         </div>
       </div>
     </div>
