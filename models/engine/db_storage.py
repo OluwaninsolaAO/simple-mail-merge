@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """SQLAlchemy Storage Engine"""
+from models.recipient import Recipient
 from models.user import User
 from models.base_model import Base
 from sqlalchemy import create_engine
@@ -11,7 +12,7 @@ from models.smtp_config import SMTPConfig
 load_dotenv()
 
 # grouping of models' classes
-classes = [User, SMTPConfig]
+classes = [User, SMTPConfig, Recipient]
 DB_USER = getenv('DB_USER')
 DB_PWD = getenv('DB_PWD')
 DB_HOST = getenv('DB_HOST')
