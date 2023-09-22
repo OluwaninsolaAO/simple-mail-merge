@@ -12,3 +12,4 @@ from api.v1.views.users import *  # noqa
 from api.v1.views.authentication import *  # noqa
 from api.v1.views.configs import *  # noqa
 from api.v1.views.sendmail import *  # noqa
+from api.v1.views.recipients import *  # noqa
