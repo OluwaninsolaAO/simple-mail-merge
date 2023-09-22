@@ -93,7 +93,7 @@ const SendMail = () => {
       console,log(response);
     } catch(err) {
       setError(err.data?.message);
-      console.log(err);
+      // console.log(err);
     }
   }
 
