@@ -5,6 +5,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Papa from "papaparse";
 import ErrorAlert from "./ErrorAlert";
+import SuccessAlert from "./SuccessAlert";
 
 const SendMail = () => {
   const [body, setBody] = useState("");
@@ -19,7 +20,8 @@ const SendMail = () => {
     sessionStorage.getItem("token").replace(/["']/g, "");
   const url = "http://0.0.0.0:5000/api/v1";
   const router = useRouter();
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   useEffect(() => {
     if (!token) {
@@ -43,7 +45,8 @@ const SendMail = () => {
   function processCsv(e) {
     e.preventDefault();
     setError("");
-    
+    setSuccess("");
+
     let csvArray;
     Papa.parse(recipients, {
       complete: function (results) {
@@ -53,8 +56,8 @@ const SendMail = () => {
     });
 
     const headers = csvArray[0];
-    if (!headers.includes('email')) {
-      setError('Email field is mandatory!');
+    if (!headers.includes("email")) {
+      setError("Email field is mandatory!");
       return;
     }
     csvArray.splice(-1, 1);
@@ -73,19 +76,46 @@ const SendMail = () => {
   }
 
   async function sendMail(recipientsJson) {
-    console.log(recipientsJson);
+    const emailData = {
+      subject,
+      config_id: JSON.parse(smtpConfig).id,
+      body,
+      recipients: recipientsJson,
+    };
+
+    try {
+      const response = await axios.post(`${url}/sendmail`, emailData, {
+        headers: {
+          "auth-token": token
+        }
+      });
+      setSuccess(response.data?.message);
+      console,log(response);
+    } catch(err) {
+      setError(err.data?.message);
+      console.log(err);
+    }
   }
 
   return (
     <form className="my-48" onSubmit={processCsv}>
-      {error && <div className="w-1/2 mx-auto"><ErrorAlert message={error} setError={setError} /></div>}
+      {error && (
+        <div className="w-1/2 mx-auto">
+          <ErrorAlert message={error} setError={setError} />
+        </div>
+      )}
+      {success && (
+        <div className="w-1/2 mx-auto">
+          <SuccessAlert message={success} setSuccess={setSuccess} />
+        </div>
+      )}
       <h2 className="text-3xl text-center">Send Mail</h2>
       <div className="lg:grid grid-cols-2 items-center justify-center ms-auto">
         <div className="px-20 mt-10">
           <input
             className="mb-2"
             placeholder="Subject"
-            // required
+            required
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
           />
@@ -94,7 +124,7 @@ const SendMail = () => {
             rows="16"
             cols="50"
             value={body}
-            // required
+            required
             onChange={(e) => setBody(e.target.value)}
             className="w-full border-4 border-blue hover:border-indigo-300 rounded hover:shadow-md"
           />
@@ -172,7 +202,7 @@ const SendMail = () => {
               id="smtp-config"
               value={smtpConfig}
               onChange={(e) => setSmtpConfig(e.target.value)}
-              // required
+              required
               className="text-center mt-2 p-3 border-indigo-900"
             >
               <option value="">Select SMTP Configuration</option>
