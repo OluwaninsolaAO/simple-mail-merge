@@ -2,7 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
+import Papa from "papaparse";
+import ErrorAlert from "./ErrorAlert";
 
 const SendMail = () => {
   const [body, setBody] = useState("");
@@ -12,13 +14,16 @@ const SendMail = () => {
   const [contactFileInput, setContactFileInput] = useState(null);
   const [userConfigs, setUserConfigs] = useState([]);
   const [smtpConfig, setSmtpConfig] = useState(null);
-  const token = sessionStorage.token && sessionStorage.getItem("token").replace(/["']/g, "");
+  const token =
+    sessionStorage.token &&
+    sessionStorage.getItem("token").replace(/["']/g, "");
   const url = "http://0.0.0.0:5000/api/v1";
   const router = useRouter();
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (!token) {
-      alert('Login required!!');
+      alert("Login required!!");
       router.push("/signin");
       return;
     }
@@ -35,30 +40,45 @@ const SendMail = () => {
     fetchUserConfigs();
   }, []);
 
-  const handleInputChange = (event) => {
-    setBody(event.target.value);
-  };
-  // console.log(smtpConfig)
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setBody(e.target.result);
-      };
-      reader.readAsText(file);
+  function processCsv(e) {
+    e.preventDefault();
+    
+    let csvArray;
+    Papa.parse(recipients, {
+      complete: function (results) {
+        csvArray = results.data;
+      },
+    });
+
+    const headers = csvArray[0];
+    if (!headers.includes('email')) {
+      setError('Email field is mandatory!');
     }
-  };
+    csvArray.splice(-1, 1);
+    const result = csvArray.slice(1).map((data) => {
+      const obj = {};
+      headers.forEach((field, index) => {
+        obj[field] = data[index];
+      });
+      return obj;
+    });
+    sendMail(result);
+  }
+
+  async function sendMail(recipientsJson) {
+    console.log(recipientsJson);
+  }
 
   return (
-    <div className="my-48">
+    <form className="my-48" onSubmit={processCsv}>
+      {error && <div className="w-1/2"><ErrorAlert message={error} /></div>}
       <h2 className="text-3xl text-center">Send Mail</h2>
       <div className="lg:grid grid-cols-2 items-center justify-center ms-auto">
         <div className="px-20 mt-10">
           <input
             className="mb-2"
             placeholder="Subject"
-            required
+            // required
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
           />
@@ -67,14 +87,24 @@ const SendMail = () => {
             rows="16"
             cols="50"
             value={body}
-            onChange={handleInputChange}
+            // required
+            onChange={(e) => setBody(e.target.value)}
             className="w-full border-4 border-blue hover:border-indigo-300 rounded hover:shadow-md"
           />
-          <div className="btn w-fit ">
+          <div className="btn w-fit mx-auto">
             <input
               type="file"
               accept=".html"
-              onChange={handleFileChange}
+              onChange={(event) => {
+                const file = event.target.files[0];
+                if (file) {
+                  const reader = new FileReader();
+                  reader.onload = (e) => {
+                    setBody(e.target.result);
+                  };
+                  reader.readAsText(file);
+                }
+              }}
               ref={(input) => setHtmlFileInput(input)}
               style={{ display: "none" }}
             />
@@ -102,10 +132,11 @@ const SendMail = () => {
             value={recipients}
             rows={10}
             col={10}
+            required
             onChange={(e) => setRecipients(e.target.value)}
             className="w-full border-4 hover:border-indigo-300 border-blue rounded"
           />
-          <div className="btn w-fit ">
+          <div className="btn w-fit mx-auto">
             <input
               type="file"
               accept=".csv"
@@ -134,7 +165,7 @@ const SendMail = () => {
               id="smtp-config"
               value={smtpConfig}
               onChange={(e) => setSmtpConfig(e.target.value)}
-              required
+              // required
               className="text-center mt-2 p-3 border-indigo-900"
             >
               <option value="">Select SMTP Configuration</option>
@@ -150,33 +181,51 @@ const SendMail = () => {
                 : "No Configuration Selected"}
             </p>
           </div>
-          {smtpConfig && <div className="flex w-3/5 flex-col mb-5 rounded mx-20 text-indigo-900 bg-indigo-200 p-5">
-            <div className="flex flex-col">
-              <div className="flex justify-between">
-                <p className="">Username:</p>
-                <p className="">{smtpConfig && JSON.parse(smtpConfig).username}</p>
-              </div>
-              <div className="flex justify-between">
-                <p className="">Alias:</p>
-                <p className="">{smtpConfig && JSON.parse(smtpConfig).alias}</p>
-              </div>
-              <div className="flex justify-between">
-                <p className="mr-auto">Server:</p>
-                <p className="">{smtpConfig && JSON.parse(smtpConfig).server}</p>
-              </div>
-              <div className="flex justify-between">
-                <p className="">Port:</p>
-                <p className="">{smtpConfig && JSON.parse(smtpConfig).port}</p>
-              </div>
-              <div className="flex justify-between">
-                <p className="">Rate:</p>
-                <p className="">{smtpConfig && JSON.parse(smtpConfig).rate}</p>
+          {smtpConfig && (
+            <div className="flex w-3/5 flex-col mb-5 rounded mx-20 text-indigo-900 bg-indigo-200 p-5">
+              <div className="flex flex-col">
+                <div className="flex justify-between">
+                  <p className="">Username:</p>
+                  <p className="">
+                    {smtpConfig && JSON.parse(smtpConfig).username}
+                  </p>
+                </div>
+                <div className="flex justify-between">
+                  <p className="">Alias:</p>
+                  <p className="">
+                    {smtpConfig && JSON.parse(smtpConfig).alias}
+                  </p>
+                </div>
+                <div className="flex justify-between">
+                  <p className="mr-auto">Server:</p>
+                  <p className="">
+                    {smtpConfig && JSON.parse(smtpConfig).server}
+                  </p>
+                </div>
+                <div className="flex justify-between">
+                  <p className="">Port:</p>
+                  <p className="">
+                    {smtpConfig && JSON.parse(smtpConfig).port}
+                  </p>
+                </div>
+                <div className="flex justify-between">
+                  <p className="">Rate:</p>
+                  <p className="">
+                    {smtpConfig && JSON.parse(smtpConfig).rate}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>}
+          )}
         </div>
+        <button
+          type="submit"
+          className="col-span-2 w-2/5 mx-auto mt-12 bg-blue hover:bg-white text-white hover:text-black hover:border border-indigo-600 py-3 rounded-lg transition ease-in duration-200 text-lg"
+        >
+          Send Now
+        </button>
       </div>
-    </div>
+    </form>
   );
 };
 
