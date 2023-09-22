@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import SMTPCard from "./SMTPCard";
+import {useRouter} from "next/navigation";
 
 const SendMail = () => {
   const [body, setBody] = useState("");
@@ -12,11 +12,13 @@ const SendMail = () => {
   const [contactFileInput, setContactFileInput] = useState(null);
   const [userConfigs, setUserConfigs] = useState([]);
   const [smtpConfig, setSmtpConfig] = useState(null);
-  const token = sessionStorage.getItem("token").replace(/["']/g, "");
+  const token = sessionStorage.token && sessionStorage.getItem("token").replace(/["']/g, "");
   const url = "http://0.0.0.0:5000/api/v1";
+  const router = useRouter();
 
   useEffect(() => {
     if (!token) {
+      alert('Login required!!');
       router.push("/signin");
       return;
     }
