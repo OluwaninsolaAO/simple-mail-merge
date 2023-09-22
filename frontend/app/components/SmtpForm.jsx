@@ -56,11 +56,11 @@ export default function SmtpForm() {
         (config) => config.username === selectedConfig
       );
       if (selected.predefined) {
-        setUsername(selected.username);
-        setAlias(selected.alias);
+        setUsername(username);
+        setAlias(alias);
         setPassword(password);
-        setServer(selected.server);
-        setPort(selected.port);
+        setServer(server);
+        setPort(port);
         setRate(selected.rate);
       }
       else {
@@ -172,7 +172,7 @@ export default function SmtpForm() {
                 }}
                 required
                 className="border border-blue py-1 px-2 w-full"
-                disabled={smtpConfig && smtpConfig.predefined ? true : false}
+                // disabled={smtpConfig && smtpConfig.predefined ? true : false}
               />
             </div>
             <div className="mt-2">
@@ -187,7 +187,7 @@ export default function SmtpForm() {
                 }}
                 required
                 className="border border-blue py-1 px-2 w-full"
-                disabled={smtpConfig && smtpConfig.predefined ? true : false}
+                // disabled={smtpConfig && smtpConfig.predefined ? true : false}
               />
             </div>
             <div className="mt-2">
@@ -216,7 +216,7 @@ export default function SmtpForm() {
                 }}
                 required
                 className="border border-blue py-1 px-2 w-full"
-                disabled={smtpConfig && smtpConfig.predefined ? true : false}
+                // disabled={smtpConfig && smtpConfig.predefined ? true : false}
               />
             </div>
             <div className="mt-2">
@@ -231,7 +231,7 @@ export default function SmtpForm() {
                 }}
                 required
                 className="border border-blue py-1 px-2 w-full"
-                disabled={smtpConfig && smtpConfig.predefined ? true : false}
+                // disabled={smtpConfig && smtpConfig.predefined ? true : false}
               />
             </div>
             <div className="mt-2">
