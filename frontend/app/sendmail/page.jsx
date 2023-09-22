@@ -1,11 +1,12 @@
-"use client";
-
 import HomePage from "../components/HomePage";
+import SendMail from "../components/SendMail";
 
-function Home() {
-    return (
-        <HomePage />
-    );
+function SendMailPage() {
+  return (
+    <div className="mt-20">
+      <SendMail />
+    </div>
+  );
 }
 
-export default Home;
+export default SendMailPage;
