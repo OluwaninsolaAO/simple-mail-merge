@@ -42,10 +42,12 @@ const SendMail = () => {
 
   function processCsv(e) {
     e.preventDefault();
+    setError("");
     
     let csvArray;
     Papa.parse(recipients, {
       complete: function (results) {
+        results.error && setError("Invalid CSV");
         csvArray = results.data;
       },
     });
@@ -53,16 +55,21 @@ const SendMail = () => {
     const headers = csvArray[0];
     if (!headers.includes('email')) {
       setError('Email field is mandatory!');
+      return;
     }
     csvArray.splice(-1, 1);
     const result = csvArray.slice(1).map((data) => {
+      if (data.length !== headers.length) {
+        setError("Incomplete values");
+        return;
+      }
       const obj = {};
       headers.forEach((field, index) => {
         obj[field] = data[index];
       });
       return obj;
     });
-    sendMail(result);
+    !error && sendMail(result);
   }
 
   async function sendMail(recipientsJson) {
@@ -71,7 +78,7 @@ const SendMail = () => {
 
   return (
     <form className="my-48" onSubmit={processCsv}>
-      {error && <div className="w-1/2"><ErrorAlert message={error} /></div>}
+      {error && <div className="w-1/2 mx-auto"><ErrorAlert message={error} setError={setError} /></div>}
       <h2 className="text-3xl text-center">Send Mail</h2>
       <div className="lg:grid grid-cols-2 items-center justify-center ms-auto">
         <div className="px-20 mt-10">
