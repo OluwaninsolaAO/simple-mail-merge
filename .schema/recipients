@@ -1,0 +1,11 @@
+mysql> desc recipients;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| data       | json         | NO   |     | NULL    |       |
+| tag        | varchar(255) | YES  |     | NULL    |       |
+| user_id    | varchar(60)  | NO   | MUL | NULL    |       |
+| id         | varchar(60)  | NO   | PRI | NULL    |       |
+| created_at | datetime     | NO   |     | NULL    |       |
+| updated_at | datetime     | NO   |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
