@@ -25,6 +25,8 @@ class User(BaseModel, Base, UserAuth):
 
     smtp_configs = relationship('SMTPConfig', backref='user',
                                 cascade='all, delete')
+    recipients_list = relationship('Recipient', backref='user',
+                                   cascade='all, delete-orphan')
 
     @property
     def name(self) -> str:
@@ -35,12 +37,18 @@ class User(BaseModel, Base, UserAuth):
         """Overrides parent's defualt"""
         obj = super().to_dict()
 
-        # process rolebased data
-        if obj.get('role', None):
-            obj.update({'role': obj.get('role').to_dict()})
+        # attributes with their own to_dict() methods
+        attrs = ['role']
+        for attr in attrs:
+            if hasattr(self, attr):
+                if getattr(self, attr, None) is not None:
+                    obj.update({attr: getattr(self, attr).to_dict()})
+                else:
+                    obj.update({attr: getattr(self, attr)})
 
         # level - 1 heldback attributes
-        attrs = ['_password', 'reset_token', 'smtp_configs', 'role']
+        attrs = ['_password', 'reset_token', 'smtp_configs',
+                 'role', 'recipients_list']
         for attr in attrs:
             if attr in obj:
                 obj.pop(attr)
