@@ -90,10 +90,13 @@ const SendMail = () => {
         }
       });
       setSuccess(response.data?.message);
-      console,log(response);
+      console.log(response);
+      setTimeout(() => {
+        router.push('/confirmation');
+      }, 3000);
     } catch(err) {
       setError(err.data?.message);
-      // console.log(err);
+      console.log(err);
     }
   }
 
