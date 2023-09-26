@@ -7,10 +7,9 @@ import { usePathname, useRouter } from "next/navigation";
 import axios from "axios";
 
 function Navbar() {
-  const openPaths = ["/", "/signin", "/signup"];
   const currentPath = usePathname();
   const router = useRouter();
-  const token = sessionStorage.getItem("token");
+  const token = sessionStorage.token && sessionStorage.getItem("token");
 
   async function handleLogout() {
     const response = await axios.delete("http://0.0.0.0:5000/api/v1/logout", {
