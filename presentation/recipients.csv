@@ -1,0 +1,27 @@
+customer_name,email,order_number,order_date,shipping_address,total_amount
+Abraham-Mercury,olagunjusola070+mercury@gmail.com,ORDER001,2023-09-26,Mercury near Sun,345.56
+Betty-Venus,olagunjusola070+venus@gmail.com,ORDER002,2023-09-27,Venus Surface,456.78
+Carlos-Mars,olagunjusola070+mars@gmail.com,ORDER003,2023-09-28,Mars Red Planet,567.89
+Diana-Jupiter,olagunjusola070+jupiter@gmail.com,ORDER004,2023-09-29,Jupiter Great Red Spot,678.90
+Ethan-Saturn,olagunjusola070+saturn@gmail.com,ORDER005,2023-09-30,Saturn Rings,789.01
+Frank-Uranus,olagunjusola070+uranus@gmail.com,ORDER006,2023-10-01,Uranus Icy Atmosphere,890.12
+Grace-Neptune,olagunjusola070+neptune@gmail.com,ORDER007,2023-10-02,Neptune Stormy Surface,901.23
+Helen-Pluto,olagunjusola070+pluto@gmail.com,ORDER008,2023-10-03,Pluto Farthest Dwarf Planet,123.45
+Isaac-Moon,olagunjusola070+moon@gmail.com,ORDER009,2023-10-04,Moon Lunar Surface,234.56
+Jack-Sun,olagunjusola070+sun@gmail.com,ORDER010,2023-10-05,Sun Core,345.67
+Kevin-Mercury,olagunjusola070+mercury@gmail.com,ORDER011,2023-10-06,Mercury near Sun,456.78
+Laura-Venus,olagunjusola070+venus@gmail.com,ORDER012,2023-10-07,Venus Surface,567.89
+Mike-Earth,olagunjusola070+earth@gmail.com,ORDER013,2023-10-08,Earth Home,678.90
+Nancy-Mars,olagunjusola070+mars@gmail.com,ORDER014,2023-10-09,Mars Red Planet,789.01
+Oliver-Jupiter,olagunjusola070+jupiter@gmail.com,ORDER015,2023-10-10,Jupiter Great Red Spot,890.12
+Pamela-Saturn,olagunjusola070+saturn@gmail.com,ORDER016,2023-10-11,Saturn Rings,901.23
+Quincy-Uranus,olagunjusola070+uranus@gmail.com,ORDER017,2023-10-12,Uranus Icy Atmosphere,123.45
+Rachel-Neptune,olagunjusola070+neptune@gmail.com,ORDER018,2023-10-13,Neptune Stormy Surface,234.56
+Sam-Pluto,olagunjusola070+pluto@gmail.com,ORDER019,2023-10-14,Pluto Farthest Dwarf Planet,345.67
+Thomas-Moon,olagunjusola070+moon@gmail.com,ORDER020,2023-10-15,Moon Lunar Surface,456.78
+Ursula-Sun,olagunjusola070+sun@gmail.com,ORDER021,2023-10-16,Sun Core,567.89
+Victoria-Mercury,olagunjusola070+mercury@gmail.com,ORDER022,2023-10-17,Mercury near Sun,678.90
+William-Venus,olagunjusola070+venus@gmail.com,ORDER023,2023-10-18,Venus Surface,789.01
+Xander-Earth,olagunjusola070+earth@gmail.com,ORDER024,2023-10-19,Earth Home,890.12
+Yara-Mars,olagunjusola070+mars@gmail.com,ORDER025,2023-10-20,Mars Red Planet,901.23
+Zane-Jupiter,olagunjusola070+jupiter@gmail.com,ORDER026,2023-10-21,Jupiter Great Red Spot,123.45

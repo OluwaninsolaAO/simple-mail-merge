@@ -1,0 +1,15 @@
+Subject: Order Confirmation - Order #{{ order_number }}
+
+Dear {{ customer_name }},
+
+This email is to confirm that we have received your order #{{ order_number }}. Below are the order details:
+
+Order Date: {{ order_date }}
+Shipping Address: {{ shipping_address }}
+Total Amount: ${{ total_amount }}
+
+If you have any questions or need further assistance, please don't hesitate to contact us.
+
+Thank you for choosing us for your purchase. We appreciate your business.
+
+Best regards,

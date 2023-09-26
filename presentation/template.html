@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f7f7f7;
+      }
+
+      p {
+        color: #2c2a2a;
+      }
+
+      h1,
+      h2 {
+        color: #09325e;
+        line-height: 120%;
+      }
+
+      h3,
+      h4 {
+        color: #007bff;
+      }
+
+      ul {
+        margin-top: -15px;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 5px auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 20px;
+        position: relative;
+        background-color: #e8f3ff;
+        color: white;
+        border-radius: 10px 10px 0 0;
+        padding: 30px 5%;
+      }
+
+      .header-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px 10px 0 0;
+      }
+
+      .logo {
+        max-width: 200px;
+        height: auto;
+        padding-top: 35px;
+      }
+
+      .content {
+        margin-bottom: 20px;
+        line-height: 1.6;
+        padding: 20px;
+        background-color: white;
+        border-radius: 0 0 10px 10px;
+      }
+
+      .button {
+        display: inline-block;
+        padding: 15px 0px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        min-width: 100%;
+        text-align: center;
+        font-weight: 700;
+        margin: 5px 0px;
+      }
+
+      .footer {
+        text-align: center;
+        color: #888;
+        font-size: 12px;
+        margin-top: 20px;
+      }
+
+      .footer a {
+        text-decoration: none;
+        color: #888;
+      }
+
+      ::selection {
+        background-color: #f3d31b;
+        color: #1f1e1e;
+      }
+
+      .subtle-bg {
+        background-color: #f4f9ff;
+      }
+
+      .p-4 {
+        padding: 15px 25px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #98caff;
+        border-radius: 15px;
+        margin-bottom: 12px;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 8px;
+      }
+      th {
+        background-color: #e9f2ff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="">
+        <img
+          class="header-image"
+          src="https://t4.ftcdn.net/jpg/04/08/53/87/360_F_408538711_ZJijVMV2KVMd7A4lTTROvlGeoFH0chL1.jpg"
+          alt=""
+        />
+      </div>
+      <div class="content">
+        <h2>Order Confirmation - Order #{{ order_number }}</h2>
+
+        <p>Dear {{ customer_name }},</p>
+        <p>
+          This email is to confirm that we have received your order
+          <strong>#{{ order_number }}</strong>.
+        </p>
+
+        <section class="subtle-bg p-4">
+          <h3>Below are the order details:</h3>
+          <table>
+            <tr>
+              <th>Order Date:</th>
+              <td>{{ order_date }}</td>
+            </tr>
+            <tr>
+              <th>Shipping Address</th>
+              <td>{{ shipping_address }}</td>
+            </tr>
+            <tr>
+              <th>Total Amount:</th>
+              <td>${{ total_amount }}</td>
+            </tr>
+          </table>
+
+          <div>
+            <a class="button" href="{{payment_link}}"
+              >PAY USD {{ total_amount }}</a
+            >
+          </div>
+          <br />
+          <small>
+            Click the button corresponding to your preferred currency to make
+            the payment.
+          </small>
+        </section>
+
+        <section>
+          <p>
+            If you have any questions or need further assistance, please don't
+            hesitate to contact us. Thank you for choosing us for your purchase.
+            We appreciate your business. Best regards,
+          </p>
+        </section>
+      </div>
+      <div class="footer">
+        <br /><br />
+        <a href="#">Simple Mail Merge</a> <br />
+        <small
+          >Our goal is to provide a solution that not only saves time but also
+          enhances the effectiveness of email communication.</small
+        >
+      </div>
+    </div>
+  </body>
+</html>
